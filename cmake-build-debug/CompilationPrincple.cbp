@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="CompilationPrincple"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CompilationPrincple">
+				<Option output="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CompilationPrincple.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 CompilationPrincple"/>
+					<CompileFile command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CompilationPrincple/fast">
+				<Option output="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CompilationPrincple.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="D:/Software/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 CompilationPrincple/fast"/>
+					<CompileFile command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="D:/University/3_1/CP/CompilationPrincple/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Software/MinGW/mingw64/bin/mingw32-make.exe -f &quot;D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Error.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Error.h">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Symbol_Table.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Symbol_Table.h">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/lexical_analysis.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/main.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,11 @@
+int g(int a){
+
+}
+void f(){
+
+}
+int main(){
+
+    g(f());
+    return 0;
+}

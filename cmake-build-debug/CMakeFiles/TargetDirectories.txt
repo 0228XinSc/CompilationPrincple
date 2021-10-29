@@ -1,0 +1,3 @@
+D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/CompilationPrincple.dir
+D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/rebuild_cache.dir
