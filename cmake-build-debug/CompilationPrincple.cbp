@@ -86,6 +86,12 @@
 		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Error.h">
 			<Option target="CompilationPrincple"/>
 		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.h">
+			<Option target="CompilationPrincple"/>
+		</Unit>
 		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.cpp">
 			<Option target="CompilationPrincple"/>
 		</Unit>

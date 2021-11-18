@@ -72,8 +72,8 @@ int main() {
         CompUnit();
         Sym_map(SymbolList[CurSymPos]);
     }
-    /*完成词法分析*/
-    /*开始语法分析，从ouput文件中读入*/
+    /*目标代码的解释执行*/
+
     fclose(stdin);
     //fclose(stdout);
     return 0;

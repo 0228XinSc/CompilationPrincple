@@ -149,6 +149,33 @@ Error.cpp.s:
 	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Error.cpp.s
 .PHONY : Error.cpp.s
 
+Interpretation_execution.obj: Interpretation_execution.cpp.obj
+
+.PHONY : Interpretation_execution.obj
+
+# target to build an object file
+Interpretation_execution.cpp.obj:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.obj
+.PHONY : Interpretation_execution.cpp.obj
+
+Interpretation_execution.i: Interpretation_execution.cpp.i
+
+.PHONY : Interpretation_execution.i
+
+# target to preprocess a source file
+Interpretation_execution.cpp.i:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.i
+.PHONY : Interpretation_execution.cpp.i
+
+Interpretation_execution.s: Interpretation_execution.cpp.s
+
+.PHONY : Interpretation_execution.s
+
+# target to generate assembly for a file
+Interpretation_execution.cpp.s:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.s
+.PHONY : Interpretation_execution.cpp.s
+
 Lexical_analysi.obj: Lexical_analysi.cpp.obj
 
 .PHONY : Lexical_analysi.obj
@@ -296,6 +323,9 @@ help:
 	@echo ... Error.obj
 	@echo ... Error.i
 	@echo ... Error.s
+	@echo ... Interpretation_execution.obj
+	@echo ... Interpretation_execution.i
+	@echo ... Interpretation_execution.s
 	@echo ... Lexical_analysi.obj
 	@echo ... Lexical_analysi.i
 	@echo ... Lexical_analysi.s

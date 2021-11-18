@@ -5,14 +5,19 @@ CMakeFiles/CompilationPrincple.dir/Error.cpp.obj: ../Error.cpp
 CMakeFiles/CompilationPrincple.dir/Error.cpp.obj: ../Error.h
 CMakeFiles/CompilationPrincple.dir/Error.cpp.obj: ../Lexical_analysi.h
 
+CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.obj: ../Interpretation_execution.cpp
+CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.obj: ../Interpretation_execution.h
+
 CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj: ../Lexical_analysi.cpp
 CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj: ../Lexical_analysi.h
 
 CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Semantic_analysis.cpp
 CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Semantic_analysis.h
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Table.h
 
 CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj: ../Error.h
 CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj: ../Lexical_analysi.h
+CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj: ../Semantic_analysis.h
 CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj: ../Syntax_analysis.cpp
 CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj: ../Syntax_analysis.h
 CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj: ../Table.h

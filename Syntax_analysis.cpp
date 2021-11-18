@@ -3,14 +3,19 @@
 // 以下语法成分不需要出现<BlockItem> <Decl> <BType>
 // 必须补全，但是在语法分析不必输出
 //
+// 语义分析在语法分析的基础上添加属性和动作
+//
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include "Lexical_analysi.h"
 #include "Syntax_analysis.h"
+#include "Semantic_analysis.h"
 #include "Table.h"
 #include "Error.h"
 using namespace std;
-
+/*代码生成*/
+vector<PCodeTable> PCodeList;//PCode指令表
 
 /*编译单元 */
 //CompUnit → {Decl} {FuncDef} MainFuncDef
@@ -44,8 +49,9 @@ void CompUnit(){
 }
 
 /*常量声明*/
-//ConstDecl → 'const' BType ConstDef { ',' ConstDef } ';'
+//ConstDecl → 'const' BType ConstDef {',' ConstDef } ';'
 //错误 HI
+//
 void ConstDecl(){
 
     if(SymbolList[CurSymPos] == CONSTTK){//CONSTTK
@@ -55,11 +61,16 @@ void ConstDecl(){
         if(SymbolList[CurSymPos] == INTTK){//INTTK
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
-            ConstDef();
+
+            int Attr_DataType = 0;
+
+            ConstDef(Attr_DataType);
+
             while(SymbolList[CurSymPos] == COMMA){//COMMA
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
-                ConstDef();
+
+                ConstDef(Attr_DataType);
             }
             if(SymbolList[CurSymPos] == SEMICN){//SEMICN
                 Sym_map(SymbolList[CurSymPos]);
@@ -76,16 +87,20 @@ void ConstDecl(){
     printf("<ConstDecl>\n");
 }
 /*BType*/
-//void BType(){
-
-//}
+void BType(){
+    if(SymbolList[CurSymPos] == INTTK) {//INTTK
+        Sym_map(SymbolList[CurSymPos]);
+        CurSymPos = CurSymPos + 1;
+    }
+}
 /*常量定义*/
 //ConstDef → Ident { '[' ConstExp ']' } '=' ConstInitVal
-void ConstDef(){
+void ConstDef(int Attr_DataType){
     if(SymbolList[CurSymPos] == IDENFR){//IDENFR
-        Ident();
+        int Attr_Index;//标识符所在类别码数组下标，根据这下标，可获得对应名字，行号
+        Ident(Attr_Index);
         /*syml*/
-        int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 2, DataTypeIdTemp = 0, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行号
+        int NameIndexTemp = Attr_Index, IdentTypeIdTemp = 2, DataTypeIdTemp = Attr_DataType, LineNumIndexTemp = Attr_Index;//行号就是标识符所处的行号
         int dim = 0;//维数
         /*symr*/
         while(SymbolList[CurSymPos] == LBRACK){//LBRACK
@@ -120,12 +135,15 @@ void ConstDef(){
                 /*symr*/
             }
         }
-        /*插入符号表*/
-        SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL);
+
         if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
-            ConstInitVal();
+
+            int Attr_CInitValue = 0;
+            ConstInitVal(Attr_CInitValue);
+            /*常量插入栈式符号表的分程序索引之前的栈顶位置*/
+            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, Attr_CInitValue);
         }
 
     }
@@ -134,8 +152,9 @@ void ConstDef(){
 }
 /*标识符*/
 //Ident
-void Ident(){
+void Ident(int& Attr_Index){
     if(SymbolList[CurSymPos] == IDENFR) {//IDENFR
+        Attr_Index = CurSymPos;//获取标识在类别码数组中的位置
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
     }
@@ -162,7 +181,7 @@ void ConstInitVal(){
 	}
 	else{
 		ConstExp();
-	} 
+	}
 	if(ErrorPrintFlag)
     printf("<ConstInitVal>\n");
 }
@@ -184,10 +203,20 @@ void AddExp(){
         printf("<AddExp>\n");
 	}
     while(SymbolList[CurSymPos] == PLUS||SymbolList[CurSymPos] == MINU){ //18 PLUS 19 MINU
+        int Plus_Minu = SymbolList[CurSymPos];//记录加减表达式符号
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
 
         MulExp();
+        //动作子程序
+        if(Plus_Minu == PLUS){
+            Sem_add();
+        }
+        else{
+            Sem_sub();
+        }
+        //动作子程序
+
 		if(SymbolList[CurSymPos] == PLUS||SymbolList[CurSymPos] == MINU){
             if(ErrorPrintFlag)
 		    printf("<AddExp>\n");
@@ -209,10 +238,20 @@ void MulExp(){
         printf("<MulExp>\n");
 	}
     while(SymbolList[CurSymPos] == MULT||SymbolList[CurSymPos] == DIV||SymbolList[CurSymPos] == MOD){// * / %
+        int Mult_Div_Mod = SymbolList[CurSymPos];//记录乘除模表达式符号
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
 
         UnaryExp();
+        if(Mult_Div_Mod == MULT){
+            Sem_mul();
+        }
+        else if(Mult_Div_Mod == DIV){
+            Sem_div();
+        }
+        else{
+            Sem_mod();
+        }
         if(SymbolList[CurSymPos] == MULT||SymbolList[CurSymPos] == DIV||SymbolList[CurSymPos] == MOD){
             if(ErrorPrintFlag)
             printf("<MulExp>\n");
@@ -230,12 +269,13 @@ void MulExp(){
 void UnaryExp(){
     /*Ident '(' [FuncRParams] ')'*/
     if(SymbolList[CurSymPos] == IDENFR&&SymbolList[CurSymPos+1] ==LPARENT){//IDENFR
-        Ident();
+        int Attr_Index;
+        Ident(Attr_Index);
         /*syml*/
         int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 1, DataTypeIdTemp = -1, LineNumIndexTemp = CurSymPos-1;
         /*symr*/
         /*调用函数，查找符号表对应的声明*/
-        SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, CALLFLAG, NULL);
+        SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, CALLFLAG, NULL, 0);
         if(DataTypeIdTemp == 3){
             RParmDataType = 3;
         }
@@ -259,17 +299,30 @@ void UnaryExp(){
             }
         }
         /*判断函数参数个数是否匹配*/
-        if(StackSymbolTable[FuncDefPosInSym].ExtraSymbol->FParmNum != RParmNum){
+        if(StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmNum != RParmNum){
             Error(ED);
         }
 		
     }
+    /*PrimaryExp*/
 	else if(SymbolList[CurSymPos] == LPARENT||SymbolList[CurSymPos] == IDENFR||SymbolList[CurSymPos] == INTCON){
         PrimaryExp();
     }
+	/*UnaryOp UnaryExp*/
     else if(SymbolList[CurSymPos] == PLUS||SymbolList[CurSymPos] == MINU||SymbolList[CurSymPos] == NOT){// + - !
-        UnaryOp();
+        int UnaryOpType = -1;
+        UnaryOp(UnaryOpType);
         UnaryExp();
+
+        if(UnaryOpType == PLUS){
+            Sem_inc();//在栈顶元素+1
+        }
+        else if(UnaryOpType == MINU){
+            Sem_dim();//在栈顶元素减一
+        }
+        else if(UnaryOpType == NOT){
+            Sem_not();
+        }
     }
     if(ErrorPrintFlag)
     printf("<UnaryExp>\n");
@@ -277,8 +330,9 @@ void UnaryExp(){
 }
 /*单目运算符*/
 //UnaryOp → '+' | '−' | '!'
-void UnaryOp(){
+void UnaryOp(int& UnaryOpType){
     if(SymbolList[CurSymPos] == PLUS||SymbolList[CurSymPos] == MINU||SymbolList[CurSymPos] == NOT){// + - !
+        UnaryOpType = SymbolList[CurSymPos];
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
     }
@@ -301,7 +355,10 @@ void PrimaryExp(){
         }
     }
     else if(SymbolList[CurSymPos] == INTCON){//INTCON
-        Number();
+        int Attr_NumValue;
+        Number(Attr_NumValue);
+
+        Sem_pushRunStacki(Attr_NumValue);
     }
     else{
         int IdentTypeIdTemp = 0;
@@ -325,12 +382,16 @@ void Exp(){
 /*左值表达式*/
 //LVal → Ident {'[' Exp ']'}
 void LVal(int& IdentTypeIdTemp){
-    Ident();
+    int Attr_Index;//标识符所在类别码数组下标，根据这下标，可获得对应名字，行号
+    Ident(Attr_Index);
     /*syml*/
-    int NameIndexTemp = CurSymPos-1, DataTypeIdTemp = -1, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行
+    int NameIndexTemp = Attr_Index, DataTypeIdTemp = -1, LineNumIndexTemp = Attr_Index;//行号就是标识符所处的行
     /*symr*/
     /*调用变量，查找符号表,获得变量信息， 将DataTypeIdTemp作为维数*/
-    SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, CALLFLAG, NULL);//若
+
+    int Attr_StackSymIndex = SymTabFind(TokenList[Attr_Index], CALLFLAG);
+    DataTypeIdTemp = StackSymbolTable[Attr_StackSymIndex].DataTypeId;
+    IdentTypeIdTemp = StackSymbolTable[Attr_StackSymIndex].IdentTypeId;
 
     /*对于实参维数的判断,因为获得变量声明时的数据类型，调用时，若遇见一个右中括号说明，将维数减一 如int a[],func(a), 代表a是1维， func(a[]), 代表a是0维*/
     while(SymbolList[CurSymPos] == LBRACK){//LBRACK
@@ -348,14 +409,17 @@ void LVal(int& IdentTypeIdTemp){
         }
     }
     RParmDataType = DataTypeIdTemp;
+
+    Sem_pushRunStack(StackSymbolTable[Attr_StackSymIndex].IntValue);
     if(ErrorPrintFlag)
     printf("<LVal>\n");
 }
 
 /*数字*/
 //Number → IntConst
-void Number(){
+void Number(int& Attr_NumValue){
     if(SymbolList[CurSymPos] == INTCON){//INTCON
+        Attr_NumValue = atoi(TokenList[CurSymPos].c_str());//将数字字符串转换整数
         IntConst();
     }
     if(ErrorPrintFlag)
@@ -403,22 +467,23 @@ void VarDecl(){
     if(SymbolList[CurSymPos] == INTTK){
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
-        if(SymbolList[CurSymPos] == IDENFR){//IDENFR Ԥ����ident
-            VarDef();
-            while(SymbolList[CurSymPos] == COMMA){//COMMA
-                Sym_map(SymbolList[CurSymPos]);
-                CurSymPos = CurSymPos+1;
+        int Attr_DataType = 0;
+        int Attr_IdentType = 3;
 
-                VarDef();
-            }
-            if(SymbolList[CurSymPos] == SEMICN){//SEMICN
-                Sym_map(SymbolList[CurSymPos]);
-                CurSymPos = CurSymPos+1;
-            }
-            else{
-                /*不需要加判断*/
-                Error(EI);
-            }
+        VarDef(Attr_DataType);
+        while(SymbolList[CurSymPos] == COMMA){//COMMA
+            Sym_map(SymbolList[CurSymPos]);
+            CurSymPos = CurSymPos+1;
+
+            VarDef(Attr_DataType);
+        }
+        if(SymbolList[CurSymPos] == SEMICN){//SEMICN
+            Sym_map(SymbolList[CurSymPos]);
+            CurSymPos = CurSymPos+1;
+        }
+        else{
+            /*不需要加判断*/
+            Error(EI);
         }
     }
     if(ErrorPrintFlag)
@@ -427,11 +492,13 @@ void VarDecl(){
 
 /*变量定义*/
 //VarDef → Ident { '[' ConstExp ']' } | Ident { '[' ConstExp ']' } '=' InitVal
-void VarDef(){
+void VarDef(int Attr_DataType){
     if(SymbolList[CurSymPos] == IDENFR){
-        Ident();
+
+        int Attr_Index;//标识符所在类别码数组下标，根据这下标，可获得对应名字，行号
+        Ident(Attr_Index);
         /*syml*/
-        int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 3, DataTypeIdTemp = 0, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行号
+        int NameIndexTemp = Attr_Index, IdentTypeIdTemp = 3, DataTypeIdTemp = Attr_DataType, LineNumIndexTemp = Attr_Index;//行号就是标识符所处的行号
         int dim = 0;//维数
         /*symr*/
         while(SymbolList[CurSymPos] == LBRACK ){//LBRACK
@@ -466,13 +533,16 @@ void VarDef(){
                 /*symr*/
             }
         }
-        /*插入符号表*/
-        SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL);
+
         if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
 
-            InitVal();
+
+            int Attr_VInitValue = 0;
+            InitVal(Attr_VInitValue);
+            /*插入符号表*/
+            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, Attr_VInitValue);
         }
     }
 
@@ -514,13 +584,14 @@ void FuncDef(){
     if(SymbolList[CurSymPos] == INTTK){//INTTK
         FuncType();
         if(SymbolList[CurSymPos] == IDENFR){//INDEFR
-            Ident();
+            int Attr_Index;
+            Ident(Attr_Index);
             /*syml*/
-            OtherSymbol* ExtraSymbol = new OtherSymbol;
+            FuncInformationTab* FuncInformation = new FuncInformationTab;
             int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 1, DataTypeIdTemp = 0, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行
             /*symr*/
             /*插入符号表*/
-            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, ExtraSymbol);
+            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, NULL);
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
 
@@ -532,14 +603,16 @@ void FuncDef(){
                     /*syml*/
                     int FParmNum = 0;
                     /*symr*/
-                    FuncFParams(FParmNum, ExtraSymbol);//获取函数形参个数和各个形参的数据类型
+
+                    FuncFParams(FParmNum, FuncInformation);//获取函数形参个数和各个形参的数据类型
+
                     /*syml*/
-                    ExtraSymbol->FParmNum = FParmNum;
+                    FuncInformation->FParmNum = FParmNum;
                     /*symr*/
                 }
                 else{
                     /*syml*/
-                    ExtraSymbol->FParmNum = 0;
+                    FuncInformation->FParmNum = 0;
                     /*symr*/
                 }
                 if(SymbolList[CurSymPos] == RPARENT){//RPARENT
@@ -562,13 +635,14 @@ void FuncDef(){
 	else if(SymbolList[CurSymPos] == VOIDTK){
 		FuncType();
         if(SymbolList[CurSymPos] == IDENFR){//INDEFR
-            Ident();
+            int Attr_Index;
+            Ident(Attr_Index);
             /*syml*/
-            OtherSymbol* ExtraSymbol = new OtherSymbol;
+            FuncInformationTab* FuncInformation = new FuncInformationTab;
             int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 1, DataTypeIdTemp = 3, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行号
             /*symr*/
             /*插入符号表*/
-            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, ExtraSymbol);
+            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, 0);
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
 
@@ -579,15 +653,15 @@ void FuncDef(){
                     /*syml*/
                     int FParmNum = 0;
                     /*symr*/
-                    FuncFParams(FParmNum, ExtraSymbol);
+                    FuncFParams(FParmNum, FuncInformation);
 
                     /*syml*/
-                    ExtraSymbol->FParmNum = FParmNum;
+                    FuncInformation->FParmNum = FParmNum;
                     /*symr*/
                 }
                 else{
                     /*syml*/
-                    ExtraSymbol->FParmNum = 0;
+                    FuncInformation->FParmNum = 0;
                     /*symr*/
                 }
 
@@ -626,17 +700,17 @@ void FuncType(){
 
 /*函数形参表*/
 //FuncFParams → FuncFParam { ',' FuncFParam }
-void FuncFParams(int& FParmNum, OtherSymbol* ExtraSymbol){
+void FuncFParams(int& FParmNum, FuncInformationTab* FuncInformation){
     int FParamDataType = 0;
     FuncFParam(FParamDataType);
-    ExtraSymbol->FParmList[FParmNum++] = FParamDataType;
+    FuncInformation->FParmList[FParmNum++] = FParamDataType;
     /*保持0维*/
     FParamDataType = 0;
     while(SymbolList[CurSymPos] == COMMA){//COMMA
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         FuncFParam(FParamDataType);
-        ExtraSymbol->FParmList[FParmNum++] = FParamDataType;
+        FuncInformation->FParmList[FParmNum++] = FParamDataType;
         FParamDataType = 0;
     }
     if(ErrorPrintFlag)
@@ -650,7 +724,8 @@ void FuncFParam(int& FParamDataType){
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         if(SymbolList[CurSymPos] == IDENFR){
-            Ident();
+            int Attr_Index;
+            Ident(Attr_Index);
 
             /*syml*/
             int FParamNameIndex = CurSymPos-1, FParamIdentType = 4, FParamLineNumIndex = CurSymPos-1;//FparamDataType可以直接当作维数0-2,行号就是标识符所处的行号
@@ -715,7 +790,7 @@ void FuncFParam(int& FParamDataType){
                 }
             }
             /*将形参变量插入符号表*/
-            SymTabInsert(FParamNameIndex, FParamIdentType, FParamDataType, FParamLineNumIndex, DECLFLAG, NULL);
+            SymTabInsert(FParamNameIndex, FParamIdentType, FParamDataType, FParamLineNumIndex, DECLFLAG, NULL, 0);
         }
     }
     if(ErrorPrintFlag)
@@ -1075,7 +1150,7 @@ void FormatString(int& FormatCNum){
         }
         else if(TokenList[CurSymPos][i] == '%' ){
             if(TokenList[CurSymPos][i+1] == 'd'){
-                FormatCNum = FormatCNum + 1;
+                FormatCNum = FormatCNum + 1;//对应 %d 个数
             }
             else {
                 IsFormatString = 0;
@@ -1118,9 +1193,13 @@ void LOrExp(){
     	printf("<LOrExp>\n");
 	}
     while(SymbolList[CurSymPos] == OR){//OR
+
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
+
         LAndExp();
+
+        Sem_orr();
         if(SymbolList[CurSymPos] == OR){
             if(ErrorPrintFlag)
     		printf("<LOrExp>\n");
@@ -1145,6 +1224,8 @@ void LAndExp(){
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         EqExp();
+
+        Sem_and();
         if(SymbolList[CurSymPos] == AND){
             if(ErrorPrintFlag)
         	printf("<LAndExp>\n");
@@ -1160,15 +1241,24 @@ void LAndExp(){
 //左递归
 //改写后EqExp → RelExp { ('==' | '!=') RelExp }
 void EqExp(){
+
     RelExp();
     if(SymbolList[CurSymPos] == EQL||SymbolList[CurSymPos] == NEQ){
         if(ErrorPrintFlag)
         printf("<EqExp>\n");
 	}
+    int Eql_Not = SymbolList[CurSymPos];
     while(SymbolList[CurSymPos] == EQL||SymbolList[CurSymPos] == NEQ){//EQL //NEQ
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         RelExp();
+        //语义分析子程序
+        if(Eql_Not == EQL){
+            Sem_eql();
+        }
+        else{
+            Sem_neq();
+        }
         if(SymbolList[CurSymPos] == EQL||SymbolList[CurSymPos] == NEQ){
             if(ErrorPrintFlag)
             printf("<EqExp>\n");

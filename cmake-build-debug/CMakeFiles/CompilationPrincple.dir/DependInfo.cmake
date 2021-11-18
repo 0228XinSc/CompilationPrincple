@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "D:/University/3_1/CP/CompilationPrincple/Error.cpp" "D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Error.cpp.obj"
+  "D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.cpp" "D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.obj"
   "D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.cpp" "D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj"
   "D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.cpp" "D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj"
   "D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.cpp" "D:/University/3_1/CP/CompilationPrincple/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj"

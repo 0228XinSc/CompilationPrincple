@@ -6,33 +6,17 @@
 
 #IncludeRegexTransform: 
 
-D:/University/3_1/CP/CompilationPrincple/Error.cpp
-stdio.h
--
-Error.h
-D:/University/3_1/CP/CompilationPrincple/Error.h
-Lexical_analysi.h
-D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
-
 D:/University/3_1/CP/CompilationPrincple/Error.h
 vector
 -
 
-D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.cpp
-iostream
+D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.cpp
+vector
 -
-string
--
-map
--
-stdio.h
--
-ctype.h
--
-string.h
--
-Lexical_analysi.h
-D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
+Interpretation_execution.h
+D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.h
+
+D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.h
 
 D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
 iostream
@@ -43,8 +27,12 @@ map
 -
 
 D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.cpp
+vector
+-
 Semantic_analysis.h
 D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
+Table.h
+D:/University/3_1/CP/CompilationPrincple/Table.h
 
 D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
 
@@ -57,6 +45,8 @@ Lexical_analysi.h
 D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
 Syntax_analysis.h
 D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h
+Semantic_analysis.h
+D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
 Table.h
 D:/University/3_1/CP/CompilationPrincple/Table.h
 Error.h

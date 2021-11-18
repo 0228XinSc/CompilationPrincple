@@ -6,12 +6,15 @@
 #include "Lexical_analysi.h"
 #include "Error.h"
 
+/*符号表操作*/
+
 /*填表*/
-void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumIndex, int InsertType, FuncInformationTab* FuncInformation){
+void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumIndex,
+        int InsertType, FuncInformationTab* FuncInformation, int IntValue){
     /*声明填表*/
     if(InsertType == DECLFLAG){
         if(SymTabFind(TokenList[NameIndex], DECLFLAG) == -1){
-            StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, FuncInformation});
+            StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, FuncInformation, IntValue});
         }
         else if(SymTabFind(TokenList[NameIndex], DECLFLAG) >= 0){
             /*重复声明*/
@@ -23,7 +26,6 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
         if((StackSymPos = SymTabFind(TokenList[NameIndex], CALLFLAG)) >= 0){
             IdentTypeId = StackSymbolTable[StackSymPos].IdentTypeId;
             DataTypeId = StackSymbolTable[StackSymPos].DataTypeId;
-
         }
         else if(SymTabFind(TokenList[NameIndex], CALLFLAG) == -1){
             Error(EC);
@@ -78,7 +80,7 @@ int SymTabFind(string token, int SymTabFindType){
     }
     return -1;
 }
-/*删表*/
+/*删除符号表栈顶内容*/
 void SymTabPop(){
 
     StackSymbolTable.pop_back();
@@ -102,9 +104,6 @@ void SymTabReLoc(){
         }
         //将分程序索引表的栈顶弹出
         SubProgramIndexTable.pop_back();
-    }
-    else if(SubProIndexTabN == 0){
-
     }
 
 
