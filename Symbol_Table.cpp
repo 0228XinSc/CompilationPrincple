@@ -35,7 +35,9 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
     int n = StackSymbolTable.size();
     for(int i=0; i<n; i++){
         printf("%-20s%-20d%-20d\n", TokenList[StackSymbolTable[i].NameIndex].c_str(), StackSymbolTable[i].DataTypeId, StackSymbolTable[i].IdentTypeId);
-    }*/
+    }
+     
+     */
 
 }
 /*查表*/

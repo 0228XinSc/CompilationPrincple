@@ -22,7 +22,7 @@ typedef struct OtherSymbolTable{
     int FParmList[500];
 } OtherSymbol;
 struct MainSymbolTable{
-    MainSymbolTable(int _NameIndex, int _IdentTypeId, int _DataTypeId, int _LineNumIndex, OtherSymbol* _ExtraSymbol) :
+    MainSymbolTable(int _NameIndex, int _IdentTypeId, int _DataTypeId, int _LineNumIndex, OtherSymbol* _ExtraSymbol ) :
                     NameIndex(_NameIndex), IdentTypeId(_IdentTypeId), DataTypeId(_DataTypeId), LineNumIndex(_LineNumIndex), ExtraSymbol(_ExtraSymbol) {}
     int NameIndex;//传TokenList 的i位置
     int IdentTypeId;
@@ -34,7 +34,7 @@ struct MainSymbolTable{
 
 /*表格*/
 //栈式符号表
-extern vector<MainSymbolTable> StackSymbolTable;
+extern vector<MainSymbolTable> StackSymbolTable;       //sdf
 //分程序索引表
 extern vector<int> SubProgramIndexTable;//存储栈中分程序第一个标识符位置
 
