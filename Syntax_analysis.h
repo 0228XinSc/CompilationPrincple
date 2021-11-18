@@ -8,6 +8,7 @@
 #include "Symbol_Table.h"
 void CompUnit();        //编译单元
 void ConstDecl();       //常量声明
+void BType();           //基本类型
 void ConstDef();        //常数定义
 void Ident();           //标识符
 void ConstExp();        //常量表达式

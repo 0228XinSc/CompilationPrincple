@@ -48,7 +48,7 @@ int main() {
 
     InitSymbolList();
 	FILE* in = freopen("testfile.txt", "r", stdin);
-    FILE* out = freopen("error.txt", "w", stdout);
+    //FILE* out = freopen("error.txt", "w", stdout);
     //FILE* out = freopen("output.txt", "w", stdout);
     /*读入字符串*/
     while((CurC = getchar()) != EOF){
@@ -75,6 +75,6 @@ int main() {
     /*完成词法分析*/
     /*开始语法分析，从ouput文件中读入*/
     fclose(stdin);
-    fclose(stdout);
+    //fclose(stdout);
     return 0;
 }

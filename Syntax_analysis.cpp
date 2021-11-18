@@ -1,6 +1,7 @@
 //
 // Created by 86156 on 2021-10-09.
 // 以下语法成分不需要出现<BlockItem> <Decl> <BType>
+// 必须补全，但是在语法分析不必输出
 //
 #include <iostream>
 #include <stdio.h>
@@ -10,10 +11,7 @@
 #include "Error.h"
 using namespace std;
 
-/*BType*/
-void BType(){
 
-}
 /*编译单元 */
 //CompUnit → {Decl} {FuncDef} MainFuncDef
 //Decl → ConstDecl | VarDecl
@@ -41,8 +39,6 @@ void CompUnit(){
        	CurSymPos = CurSymPos+1;
 		MainFuncDef();
     }
-
-
     if(ErrorPrintFlag)
     printf("<CompUnit>\n");
 }
@@ -55,6 +51,7 @@ void ConstDecl(){
     if(SymbolList[CurSymPos] == CONSTTK){//CONSTTK
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
+
         if(SymbolList[CurSymPos] == INTTK){//INTTK
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
@@ -78,6 +75,10 @@ void ConstDecl(){
     if(ErrorPrintFlag)
     printf("<ConstDecl>\n");
 }
+/*BType*/
+//void BType(){
+
+//}
 /*常量定义*/
 //ConstDef → Ident { '[' ConstExp ']' } '=' ConstInitVal
 void ConstDef(){

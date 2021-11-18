@@ -19,7 +19,7 @@ enum DataType{
 };
 typedef struct OtherSymbolTable{
     int FParmNum;
-    int FParmList[100];
+    int FParmList[500];
 } OtherSymbol;
 struct MainSymbolTable{
     MainSymbolTable(int _NameIndex, int _IdentTypeId, int _DataTypeId, int _LineNumIndex, OtherSymbol* _ExtraSymbol) :
@@ -32,12 +32,16 @@ struct MainSymbolTable{
 };
 
 
-
+/*表格*/
+//栈式符号表
 extern vector<MainSymbolTable> StackSymbolTable;
+//分程序索引表
 extern vector<int> SubProgramIndexTable;//存储栈中分程序第一个标识符位置
 
 /*失效区*/
 //将删除的分程序符号表存入失效区中，有助于构造交叉引用表，或者帮助进行运行时的错误诊断
+
+//符号表操作
 void SymTabInsert(int NameIndex, int& IdentTypeId, int& DataTypeId, int LineNumIndex, int InsertType, OtherSymbol* ExtraSymbol);
 int SymTabFind(string token, int SymTabFindType);//查表
 void SymTabPop();

@@ -4,8 +4,9 @@ int g(int a){
 void f(){
 
 }
+int a;
 int main(){
-
+    a+1
     g(f());
-    return 0;
+    return
 }

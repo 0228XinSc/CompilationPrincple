@@ -14,7 +14,7 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
             StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, ExtraSymbol});
         }
         else if(SymTabFind(TokenList[NameIndex], DECLFLAG) >= 0){
-            /**/
+            /*重复声明*/
             Error(EB);
         }
     }
@@ -41,6 +41,7 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
 /*查表*/
 int SymTabFind(string token, int SymTabFindType){
     int i, n = StackSymbolTable.size();
+    //栈式符号表为空时,返回-1表示没查找到对应标识符
     if(n == 0){
         return -1;
     }
@@ -52,7 +53,7 @@ int SymTabFind(string token, int SymTabFindType){
         if(SubProgramIndexTable.size() == 0){
             for(i=n-1; i>=0; i--){
                 if(TokenList[StackSymbolTable[i].NameIndex] == token){
-                    return i;
+                    return i;//查找到对应标识符，返回其在栈式符号表的位置
                 }
             }
         }
@@ -60,13 +61,13 @@ int SymTabFind(string token, int SymTabFindType){
         else{
             for(i=n-1; i>=SubProgramIndexTable[SubProIndex]; i--){
                 if(TokenList[StackSymbolTable[i].NameIndex] == token){
-                    return i;
+                    return i;//查找到对应标识符，返回其在栈式符号表的位置
                 }
             }
         }
 
     }
-    /*调用，判断该标识符 是否声明， 若声明则将*/
+    /*调用，判断该标识符是否已经声明，若声明则将*/
     else if(SymTabFindType == CALLFLAG){
         for(i = n-1; i>=0; i--){
             if(TokenList[StackSymbolTable[i].NameIndex] == token){
