@@ -4,9 +4,6 @@
 
 /*
  * 词法分析器实现
- * 功能：
- *
- *
  * */
 
 #include <iostream>
@@ -15,7 +12,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "lexical_analysis.h"
+#include "Lexical_analysi.h"
 
 using namespace std;
 

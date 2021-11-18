@@ -1,9 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/CompilationPrincple.dir/main.cpp.obj"
   "CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj"
-  "CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj"
+  "CMakeFiles/CompilationPrincple.dir/Table.cpp.obj"
   "CMakeFiles/CompilationPrincple.dir/Error.cpp.obj"
-  "CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj"
+  "CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj"
+  "CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj"
   "CompilationPrincple.pdb"
   "CompilationPrincple.exe"
   "CompilationPrincple.exe.manifest"

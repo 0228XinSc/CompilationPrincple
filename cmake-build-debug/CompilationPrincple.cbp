@@ -86,10 +86,16 @@
 		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Error.h">
 			<Option target="CompilationPrincple"/>
 		</Unit>
-		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Symbol_Table.cpp">
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.cpp">
 			<Option target="CompilationPrincple"/>
 		</Unit>
-		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Symbol_Table.h">
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.cpp">
+			<Option target="CompilationPrincple"/>
+		</Unit>
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h">
 			<Option target="CompilationPrincple"/>
 		</Unit>
 		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.cpp">
@@ -98,10 +104,10 @@
 		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h">
 			<Option target="CompilationPrincple"/>
 		</Unit>
-		<Unit filename="D:/University/3_1/CP/CompilationPrincple/lexical_analysis.cpp">
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Table.cpp">
 			<Option target="CompilationPrincple"/>
 		</Unit>
-		<Unit filename="D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h">
+		<Unit filename="D:/University/3_1/CP/CompilationPrincple/Table.h">
 			<Option target="CompilationPrincple"/>
 		</Unit>
 		<Unit filename="D:/University/3_1/CP/CompilationPrincple/main.cpp">

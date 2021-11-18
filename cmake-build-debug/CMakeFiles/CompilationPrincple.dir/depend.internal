@@ -4,23 +4,26 @@
 CMakeFiles/CompilationPrincple.dir/Error.cpp.obj
  D:/University/3_1/CP/CompilationPrincple/Error.cpp
  D:/University/3_1/CP/CompilationPrincple/Error.h
- D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h
-CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj
- D:/University/3_1/CP/CompilationPrincple/Error.h
- D:/University/3_1/CP/CompilationPrincple/Symbol_Table.cpp
- D:/University/3_1/CP/CompilationPrincple/Symbol_Table.h
- D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h
+ D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
+CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj
+ D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.cpp
+ D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj
+ D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.cpp
+ D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
 CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj
  D:/University/3_1/CP/CompilationPrincple/Error.h
- D:/University/3_1/CP/CompilationPrincple/Symbol_Table.h
+ D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
  D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.cpp
  D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h
- D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h
-CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj
- D:/University/3_1/CP/CompilationPrincple/lexical_analysis.cpp
- D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h
+ D:/University/3_1/CP/CompilationPrincple/Table.h
+CMakeFiles/CompilationPrincple.dir/Table.cpp.obj
+ D:/University/3_1/CP/CompilationPrincple/Error.h
+ D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
+ D:/University/3_1/CP/CompilationPrincple/Table.cpp
+ D:/University/3_1/CP/CompilationPrincple/Table.h
 CMakeFiles/CompilationPrincple.dir/main.cpp.obj
- D:/University/3_1/CP/CompilationPrincple/Symbol_Table.h
+ D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
  D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h
- D:/University/3_1/CP/CompilationPrincple/lexical_analysis.h
+ D:/University/3_1/CP/CompilationPrincple/Table.h
  D:/University/3_1/CP/CompilationPrincple/main.cpp

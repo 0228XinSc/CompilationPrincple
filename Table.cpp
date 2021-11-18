@@ -2,16 +2,16 @@
 // Created by 86156 on 2021-10-19.
 //
 #include <stdio.h>
-#include "Symbol_Table.h"
-#include "lexical_analysis.h"
+#include "Table.h"
+#include "Lexical_analysi.h"
 #include "Error.h"
 
 /*填表*/
-void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumIndex, int InsertType, OtherSymbol* ExtraSymbol){
+void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumIndex, int InsertType, FuncInformationTab* FuncInformation){
     /*声明填表*/
     if(InsertType == DECLFLAG){
         if(SymTabFind(TokenList[NameIndex], DECLFLAG) == -1){
-            StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, ExtraSymbol});
+            StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, FuncInformation});
         }
         else if(SymTabFind(TokenList[NameIndex], DECLFLAG) >= 0){
             /*重复声明*/

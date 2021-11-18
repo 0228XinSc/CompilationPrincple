@@ -3,9 +3,9 @@
 //
 
 #include <bits/stdc++.h>
-#include "lexical_analysis.h"
+#include "Lexical_analysi.h"
 #include "Syntax_analysis.h"
-#include "Symbol_Table.h"
+#include "Table.h"
 
 #define DEBUG
 

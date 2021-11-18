@@ -3,4 +3,4 @@ project(CompilationPrincple)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(CompilationPrincple main.cpp Syntax_analysis.h Syntax_analysis.cpp Symbol_Table.cpp Symbol_Table.h Error.cpp Error.h lexical_analysis.cpp lexical_analysis.h)
+add_executable(CompilationPrincple main.cpp Syntax_analysis.h Syntax_analysis.cpp Table.cpp Table.h Error.cpp Error.h Lexical_analysi.cpp Lexical_analysi.h Semantic_analysis.cpp Semantic_analysis.h)

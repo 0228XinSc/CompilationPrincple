@@ -149,32 +149,59 @@ Error.cpp.s:
 	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Error.cpp.s
 .PHONY : Error.cpp.s
 
-Symbol_Table.obj: Symbol_Table.cpp.obj
+Lexical_analysi.obj: Lexical_analysi.cpp.obj
 
-.PHONY : Symbol_Table.obj
+.PHONY : Lexical_analysi.obj
 
 # target to build an object file
-Symbol_Table.cpp.obj:
-	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj
-.PHONY : Symbol_Table.cpp.obj
+Lexical_analysi.cpp.obj:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj
+.PHONY : Lexical_analysi.cpp.obj
 
-Symbol_Table.i: Symbol_Table.cpp.i
+Lexical_analysi.i: Lexical_analysi.cpp.i
 
-.PHONY : Symbol_Table.i
+.PHONY : Lexical_analysi.i
 
 # target to preprocess a source file
-Symbol_Table.cpp.i:
-	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.i
-.PHONY : Symbol_Table.cpp.i
+Lexical_analysi.cpp.i:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.i
+.PHONY : Lexical_analysi.cpp.i
 
-Symbol_Table.s: Symbol_Table.cpp.s
+Lexical_analysi.s: Lexical_analysi.cpp.s
 
-.PHONY : Symbol_Table.s
+.PHONY : Lexical_analysi.s
 
 # target to generate assembly for a file
-Symbol_Table.cpp.s:
-	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.s
-.PHONY : Symbol_Table.cpp.s
+Lexical_analysi.cpp.s:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.s
+.PHONY : Lexical_analysi.cpp.s
+
+Semantic_analysis.obj: Semantic_analysis.cpp.obj
+
+.PHONY : Semantic_analysis.obj
+
+# target to build an object file
+Semantic_analysis.cpp.obj:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj
+.PHONY : Semantic_analysis.cpp.obj
+
+Semantic_analysis.i: Semantic_analysis.cpp.i
+
+.PHONY : Semantic_analysis.i
+
+# target to preprocess a source file
+Semantic_analysis.cpp.i:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.i
+.PHONY : Semantic_analysis.cpp.i
+
+Semantic_analysis.s: Semantic_analysis.cpp.s
+
+.PHONY : Semantic_analysis.s
+
+# target to generate assembly for a file
+Semantic_analysis.cpp.s:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.s
+.PHONY : Semantic_analysis.cpp.s
 
 Syntax_analysis.obj: Syntax_analysis.cpp.obj
 
@@ -203,32 +230,32 @@ Syntax_analysis.cpp.s:
 	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.s
 .PHONY : Syntax_analysis.cpp.s
 
-lexical_analysis.obj: lexical_analysis.cpp.obj
+Table.obj: Table.cpp.obj
 
-.PHONY : lexical_analysis.obj
+.PHONY : Table.obj
 
 # target to build an object file
-lexical_analysis.cpp.obj:
-	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj
-.PHONY : lexical_analysis.cpp.obj
+Table.cpp.obj:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Table.cpp.obj
+.PHONY : Table.cpp.obj
 
-lexical_analysis.i: lexical_analysis.cpp.i
+Table.i: Table.cpp.i
 
-.PHONY : lexical_analysis.i
+.PHONY : Table.i
 
 # target to preprocess a source file
-lexical_analysis.cpp.i:
-	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.i
-.PHONY : lexical_analysis.cpp.i
+Table.cpp.i:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Table.cpp.i
+.PHONY : Table.cpp.i
 
-lexical_analysis.s: lexical_analysis.cpp.s
+Table.s: Table.cpp.s
 
-.PHONY : lexical_analysis.s
+.PHONY : Table.s
 
 # target to generate assembly for a file
-lexical_analysis.cpp.s:
-	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.s
-.PHONY : lexical_analysis.cpp.s
+Table.cpp.s:
+	$(MAKE) -f CMakeFiles\CompilationPrincple.dir\build.make CMakeFiles/CompilationPrincple.dir/Table.cpp.s
+.PHONY : Table.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -269,15 +296,18 @@ help:
 	@echo ... Error.obj
 	@echo ... Error.i
 	@echo ... Error.s
-	@echo ... Symbol_Table.obj
-	@echo ... Symbol_Table.i
-	@echo ... Symbol_Table.s
+	@echo ... Lexical_analysi.obj
+	@echo ... Lexical_analysi.i
+	@echo ... Lexical_analysi.s
+	@echo ... Semantic_analysis.obj
+	@echo ... Semantic_analysis.i
+	@echo ... Semantic_analysis.s
 	@echo ... Syntax_analysis.obj
 	@echo ... Syntax_analysis.i
 	@echo ... Syntax_analysis.s
-	@echo ... lexical_analysis.obj
-	@echo ... lexical_analysis.i
-	@echo ... lexical_analysis.s
+	@echo ... Table.obj
+	@echo ... Table.i
+	@echo ... Table.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

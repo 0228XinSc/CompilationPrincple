@@ -3,7 +3,7 @@
 //
 #include <stdio.h>
 #include "Error.h"
-#include "lexical_analysis.h"
+#include "Lexical_analysi.h"
 void Error(int ErrorType){
     switch (ErrorType){
         case 0:     //a 非法符号

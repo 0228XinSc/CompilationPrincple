@@ -82,18 +82,18 @@ CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.s"
 	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\Syntax_analysis.cpp -o CMakeFiles\CompilationPrincple.dir\Syntax_analysis.cpp.s
 
-CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj: CMakeFiles/CompilationPrincple.dir/flags.make
-CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj: ../Symbol_Table.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj"
-	D:\Software\MinGW\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\CompilationPrincple.dir\Symbol_Table.cpp.obj -c D:\University\3_1\CP\CompilationPrincple\Symbol_Table.cpp
+CMakeFiles/CompilationPrincple.dir/Table.cpp.obj: CMakeFiles/CompilationPrincple.dir/flags.make
+CMakeFiles/CompilationPrincple.dir/Table.cpp.obj: ../Table.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CompilationPrincple.dir/Table.cpp.obj"
+	D:\Software\MinGW\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\CompilationPrincple.dir\Table.cpp.obj -c D:\University\3_1\CP\CompilationPrincple\Table.cpp
 
-CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.i"
-	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\University\3_1\CP\CompilationPrincple\Symbol_Table.cpp > CMakeFiles\CompilationPrincple.dir\Symbol_Table.cpp.i
+CMakeFiles/CompilationPrincple.dir/Table.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CompilationPrincple.dir/Table.cpp.i"
+	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\University\3_1\CP\CompilationPrincple\Table.cpp > CMakeFiles\CompilationPrincple.dir\Table.cpp.i
 
-CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.s"
-	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\Symbol_Table.cpp -o CMakeFiles\CompilationPrincple.dir\Symbol_Table.cpp.s
+CMakeFiles/CompilationPrincple.dir/Table.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/Table.cpp.s"
+	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\Table.cpp -o CMakeFiles\CompilationPrincple.dir\Table.cpp.s
 
 CMakeFiles/CompilationPrincple.dir/Error.cpp.obj: CMakeFiles/CompilationPrincple.dir/flags.make
 CMakeFiles/CompilationPrincple.dir/Error.cpp.obj: ../Error.cpp
@@ -108,40 +108,55 @@ CMakeFiles/CompilationPrincple.dir/Error.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/Error.cpp.s"
 	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\Error.cpp -o CMakeFiles\CompilationPrincple.dir\Error.cpp.s
 
-CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj: CMakeFiles/CompilationPrincple.dir/flags.make
-CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj: ../lexical_analysis.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj"
-	D:\Software\MinGW\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\CompilationPrincple.dir\lexical_analysis.cpp.obj -c D:\University\3_1\CP\CompilationPrincple\lexical_analysis.cpp
+CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj: CMakeFiles/CompilationPrincple.dir/flags.make
+CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj: ../Lexical_analysi.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj"
+	D:\Software\MinGW\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\CompilationPrincple.dir\Lexical_analysi.cpp.obj -c D:\University\3_1\CP\CompilationPrincple\Lexical_analysi.cpp
 
-CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.i"
-	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\University\3_1\CP\CompilationPrincple\lexical_analysis.cpp > CMakeFiles\CompilationPrincple.dir\lexical_analysis.cpp.i
+CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.i"
+	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\University\3_1\CP\CompilationPrincple\Lexical_analysi.cpp > CMakeFiles\CompilationPrincple.dir\Lexical_analysi.cpp.i
 
-CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.s"
-	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\lexical_analysis.cpp -o CMakeFiles\CompilationPrincple.dir\lexical_analysis.cpp.s
+CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.s"
+	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\Lexical_analysi.cpp -o CMakeFiles\CompilationPrincple.dir\Lexical_analysi.cpp.s
+
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: CMakeFiles/CompilationPrincple.dir/flags.make
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Semantic_analysis.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj"
+	D:\Software\MinGW\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\CompilationPrincple.dir\Semantic_analysis.cpp.obj -c D:\University\3_1\CP\CompilationPrincple\Semantic_analysis.cpp
+
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.i"
+	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\University\3_1\CP\CompilationPrincple\Semantic_analysis.cpp > CMakeFiles\CompilationPrincple.dir\Semantic_analysis.cpp.i
+
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.s"
+	D:\Software\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\University\3_1\CP\CompilationPrincple\Semantic_analysis.cpp -o CMakeFiles\CompilationPrincple.dir\Semantic_analysis.cpp.s
 
 # Object files for target CompilationPrincple
 CompilationPrincple_OBJECTS = \
 "CMakeFiles/CompilationPrincple.dir/main.cpp.obj" \
 "CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj" \
-"CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj" \
+"CMakeFiles/CompilationPrincple.dir/Table.cpp.obj" \
 "CMakeFiles/CompilationPrincple.dir/Error.cpp.obj" \
-"CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj"
+"CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj" \
+"CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj"
 
 # External object files for target CompilationPrincple
 CompilationPrincple_EXTERNAL_OBJECTS =
 
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/main.cpp.obj
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj
-CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/Symbol_Table.cpp.obj
+CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/Table.cpp.obj
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/Error.cpp.obj
-CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/lexical_analysis.cpp.obj
+CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj
+CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/build.make
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/linklibs.rsp
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/objects1.rsp
 CompilationPrincple.exe: CMakeFiles/CompilationPrincple.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable CompilationPrincple.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\University\3_1\CP\CompilationPrincple\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable CompilationPrincple.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\CompilationPrincple.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

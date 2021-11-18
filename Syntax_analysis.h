@@ -5,7 +5,7 @@
 #ifndef COMPLIER_SYNTAX_ANALYSIS_H
 #define COMPLIER_SYNTAX_ANALYSIS_H
 #include <vector>
-#include "Symbol_Table.h"
+#include "Table.h"
 void CompUnit();        //编译单元
 void ConstDecl();       //常量声明
 void BType();           //基本类型
