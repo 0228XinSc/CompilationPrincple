@@ -11,11 +11,11 @@
 #include "Lexical_analysi.h"
 #include "Syntax_analysis.h"
 #include "Semantic_analysis.h"
+#include "Interpretation_execution.h"
 #include "Table.h"
 #include "Error.h"
 using namespace std;
-/*代码生成*/
-vector<PCodeTable> PCodeList;//PCode指令表
+
 
 /*编译单元 */
 //CompUnit → {Decl} {FuncDef} MainFuncDef
@@ -62,7 +62,7 @@ void ConstDecl(){
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
 
-            int Attr_DataType = 0;
+            int Attr_DataType = Int;
 
             ConstDef(Attr_DataType);
 
@@ -71,6 +71,7 @@ void ConstDecl(){
                 CurSymPos = CurSymPos+1;
 
                 ConstDef(Attr_DataType);
+
             }
             if(SymbolList[CurSymPos] == SEMICN){//SEMICN
                 Sym_map(SymbolList[CurSymPos]);
@@ -99,6 +100,8 @@ void ConstDef(int Attr_DataType){
     if(SymbolList[CurSymPos] == IDENFR){//IDENFR
         int Attr_Index;//标识符所在类别码数组下标，根据这下标，可获得对应名字，行号
         Ident(Attr_Index);
+        IntDataTable[IntDataTableTop++] = 0;//初始未赋初值都设为0
+
         /*syml*/
         int NameIndexTemp = Attr_Index, IdentTypeIdTemp = 2, DataTypeIdTemp = Attr_DataType, LineNumIndexTemp = Attr_Index;//行号就是标识符所处的行号
         int dim = 0;//维数
@@ -135,15 +138,19 @@ void ConstDef(int Attr_DataType){
                 /*symr*/
             }
         }
+        SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, &IntDataTable[IntDataTableTop-1]);
 
         if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
+            //printf("%x ", StackSymbolTable.back().IntDataAddr);
+            //Sem_load(StackSymbolTable.back().IntDataAddr);
 
-            int Attr_CInitValue = 0;
-            ConstInitVal(Attr_CInitValue);
-            /*常量插入栈式符号表的分程序索引之前的栈顶位置*/
-            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, Attr_CInitValue);
+            //int Attr_CInitValue = 0;初值不用作为属性，其初值最后应该在栈顶，用sto指令即可
+            ConstInitVal();
+
+
+            Sem_sto(StackSymbolTable.back().IntDataAddr);
         }
 
     }
@@ -287,7 +294,7 @@ void UnaryExp(){
 
             if(SymbolList[CurSymPos] != RPARENT){
 
-                FuncRParams(RParmNum, StackSymbolTable[FuncDefPosInSym].ExtraSymbol->FParmList, StackSymbolTable[FuncDefPosInSym].ExtraSymbol->FParmNum);//函数实参表
+                FuncRParams(RParmNum, StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmList, StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmNum);//函数实参表
             }
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
@@ -357,12 +364,14 @@ void PrimaryExp(){
     else if(SymbolList[CurSymPos] == INTCON){//INTCON
         int Attr_NumValue;
         Number(Attr_NumValue);
-
-        Sem_pushRunStacki(Attr_NumValue);
+        IntDataTable[IntDataTableTop++] = Attr_NumValue;
+        //int* Attr_NumValueAddr = &Attr_NumValue;
+        Sem_loadi(&IntDataTable[IntDataTableTop-1]);
     }
     else{
         int IdentTypeIdTemp = 0;
-        LVal(IdentTypeIdTemp);
+        int Attr_StackSymIndex = -1;
+        LVal(IdentTypeIdTemp, Attr_StackSymIndex);
     }
     if(ErrorPrintFlag)
     printf("<PrimaryExp>\n");
@@ -381,7 +390,7 @@ void Exp(){
 }
 /*左值表达式*/
 //LVal → Ident {'[' Exp ']'}
-void LVal(int& IdentTypeIdTemp){
+void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex){
     int Attr_Index;//标识符所在类别码数组下标，根据这下标，可获得对应名字，行号
     Ident(Attr_Index);
     /*syml*/
@@ -389,7 +398,7 @@ void LVal(int& IdentTypeIdTemp){
     /*symr*/
     /*调用变量，查找符号表,获得变量信息， 将DataTypeIdTemp作为维数*/
 
-    int Attr_StackSymIndex = SymTabFind(TokenList[Attr_Index], CALLFLAG);
+    Attr_StackSymIndex = SymTabFind(TokenList[Attr_Index], CALLFLAG);
     DataTypeIdTemp = StackSymbolTable[Attr_StackSymIndex].DataTypeId;
     IdentTypeIdTemp = StackSymbolTable[Attr_StackSymIndex].IdentTypeId;
 
@@ -409,8 +418,9 @@ void LVal(int& IdentTypeIdTemp){
         }
     }
     RParmDataType = DataTypeIdTemp;
+    //printf("%x ", StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
+    Sem_load(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
 
-    Sem_pushRunStack(StackSymbolTable[Attr_StackSymIndex].IntValue);
     if(ErrorPrintFlag)
     printf("<LVal>\n");
 }
@@ -471,11 +481,16 @@ void VarDecl(){
         int Attr_IdentType = 3;
 
         VarDef(Attr_DataType);
+
+
+
         while(SymbolList[CurSymPos] == COMMA){//COMMA
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
 
             VarDef(Attr_DataType);
+
+
         }
         if(SymbolList[CurSymPos] == SEMICN){//SEMICN
             Sym_map(SymbolList[CurSymPos]);
@@ -497,6 +512,8 @@ void VarDef(int Attr_DataType){
 
         int Attr_Index;//标识符所在类别码数组下标，根据这下标，可获得对应名字，行号
         Ident(Attr_Index);
+        IntDataTable[IntDataTableTop++] = 0;//初始未赋初值都设为0
+        //printf("%x\n",&IntDataTable[IntDataTableTop-1]);
         /*syml*/
         int NameIndexTemp = Attr_Index, IdentTypeIdTemp = 3, DataTypeIdTemp = Attr_DataType, LineNumIndexTemp = Attr_Index;//行号就是标识符所处的行号
         int dim = 0;//维数
@@ -533,16 +550,18 @@ void VarDef(int Attr_DataType){
                 /*symr*/
             }
         }
-
+        SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, &IntDataTable[IntDataTableTop-1]);
         if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
+            //printf("%d\n", StackSymbolTable.back().IntDataAddr);
+            //Sem_load(StackSymbolTable[StackSymbolTable.size()-1].IntDataAddr);
 
+            //int Attr_CInitValue = 0;初值不用作为属性，其初值最后应该在栈顶，用sto指令即可
+            InitVal();
 
-            int Attr_VInitValue = 0;
-            InitVal(Attr_VInitValue);
-            /*插入符号表*/
-            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, Attr_VInitValue);
+            Sem_sto(StackSymbolTable.back().IntDataAddr);
+            //printf("%d\n", StackSymbolTable.back().IntDataAddr);
         }
     }
 
@@ -591,7 +610,7 @@ void FuncDef(){
             int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 1, DataTypeIdTemp = 0, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行
             /*symr*/
             /*插入符号表*/
-            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, NULL);
+            SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, 0);
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
 
@@ -849,10 +868,17 @@ void Stmt(){
     if(SymbolList[CurSymPos] == IFTK){//IFTK
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
+
+        /*还是在IntData中生成一个标号*/
+        IntDataTable[IntDataTableTop++] = -1;
+        int Lable_inIntTabIndexA = IntDataTableTop-1;
         if(SymbolList[CurSymPos] == LPARENT){//LPARENT
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
             Cond();
+            /*有条件跳转*/
+            Sem_jpc(&IntDataTable[Lable_inIntTabIndexA]);
+
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
@@ -863,6 +889,11 @@ void Stmt(){
                 Stmt();
 
                 if(SymbolList[CurSymPos] == ELSETK){//ELSETK
+                    /*还是在IntData中生成一个标号*/
+                    IntDataTable[IntDataTableTop++] = -1;
+                    int Lable_inIntTabIndexB = IntDataTableTop-1;
+                    Sem_jmp(&IntDataTable[Lable_inIntTabIndexB]);
+                    Sem_gpi(&IntDataTable[Lable_inIntTabIndexA]);
                     Sym_map(SymbolList[CurSymPos]);
                     CurSymPos = CurSymPos+1;
                     if(SymbolList[CurSymPos] == LBRACE){
@@ -870,7 +901,10 @@ void Stmt(){
                     }
 
                     Stmt();
-
+                    Sem_gpi(&IntDataTable[Lable_inIntTabIndexB]);
+                }
+                else{
+                    Sem_gpi(&IntDataTable[Lable_inIntTabIndexA]);
                 }
             }
             else{
@@ -897,6 +931,10 @@ void Stmt(){
     else if(SymbolList[CurSymPos] == WHILETK){//WHILETK
         /*错误处理：while语句判断*/
         IsWhile.push_back(1);
+        /*设置标号，labA*/
+        IntDataTable[IntDataTableTop++] = PCodeList.size()-1;
+        int Lable_inIntTabIndexA = IntDataTableTop-1;
+        int Lable_inIntTabIndexB = -1;
 
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
@@ -904,6 +942,8 @@ void Stmt(){
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
             Cond();
+            /*有条件跳转*/
+            Sem_jpc(&IntDataTable[Lable_inIntTabIndexB]);
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
@@ -911,6 +951,8 @@ void Stmt(){
                     SymTabLoc((int)StackSymbolTable.size());
                 }*/
                 Stmt();
+                Sem_jmp(&IntDataTable[Lable_inIntTabIndexA]);
+                Sem_gpi(&IntDataTable[Lable_inIntTabIndexB]);
             }
             else{
                 Error(EJ);
@@ -985,13 +1027,19 @@ void Stmt(){
             CurSymPos = CurSymPos+1;
 
             int FormatCNum = 0, ExpNum = 0;//格式%d字符个数
+            IntDataTable[IntDataTableTop++] = CurSymPos;
+            int FormatString_inTokenListIndex = IntDataTableTop-1;
             FormatString(FormatCNum);
             while(SymbolList[CurSymPos]== COMMA){//COMMA
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
                 Exp();
+                Sem_output(&IntDataTable[FormatString_inTokenListIndex]);
+                //printf("%d ", &IntDataTable[FormatString_inTokenListIndex]);
                 ExpNum = ExpNum + 1;
             }
+            Sem_output(&IntDataTable[FormatString_inTokenListIndex]);
+            //printf("%d \n", &IntDataTable[FormatString_inTokenListIndex]);
             /*printf格式字符和表达式不匹配*/
             if(ExpNum != FormatCNum){
                 Error(EL);
@@ -1049,7 +1097,8 @@ void Stmt(){
 		}
 		if(Expflag == 0){
 			int IdentTypeIdTemp = 0;
-		    LVal(IdentTypeIdTemp);
+			int Attr_StackSymIndex = -1;
+		    LVal(IdentTypeIdTemp, Attr_StackSymIndex);
         	if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
         	    /*不能改变常量的值*/
         	    if(IdentTypeIdTemp == 2){
@@ -1069,6 +1118,9 @@ void Stmt(){
         	                if(SymbolList[CurSymPos] == SEMICN){//SEMICN
         	                    Sym_map(SymbolList[CurSymPos]);
          	                   	CurSymPos = CurSymPos+1;
+
+         	                   	Sem_input();
+         	                   	Sem_sto(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
         	                }
         	                else{
                                 /*不需要加判断*/
@@ -1091,6 +1143,7 @@ void Stmt(){
             	}
             	else{
             	    Exp();
+            	    Sem_sto(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
             	    if(SymbolList[CurSymPos] == SEMICN){//SEMICN
             	        Sym_map(SymbolList[CurSymPos]);
             	        CurSymPos = CurSymPos+1;
@@ -1278,10 +1331,26 @@ void RelExp(){
         if(ErrorPrintFlag)
         printf("<RelExp>\n");
 	}
+    int RelOp = SymbolList[CurSymPos];
     while(SymbolList[CurSymPos] == GRE||SymbolList[CurSymPos] == LSS||SymbolList[CurSymPos] == GEQ||SymbolList[CurSymPos] == LEQ){//GRE LSS GEQ LEQ
+
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         AddExp();
+        if(RelOp == GRE){
+            Sem_gre();
+        }
+        else if(RelOp == LSS){
+            Sem_lss();
+        }
+        else if(RelOp == GEQ){
+            Sem_geq();
+        }
+        else if(RelOp == LEQ){
+            Sem_leq();
+        }
+
+
         if(SymbolList[CurSymPos] == GRE||SymbolList[CurSymPos] == LSS||SymbolList[CurSymPos] == GEQ||SymbolList[CurSymPos] == LEQ){
             if(ErrorPrintFlag)
             printf("<RelExp>\n");

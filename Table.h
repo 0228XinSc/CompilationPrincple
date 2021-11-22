@@ -22,6 +22,10 @@ enum PCodeType{
     P_AND,
     P_EQL,
     P_NEQ,
+    P_LSS,
+    P_LEQ,
+    P_GRE,
+    P_GEQ,
     P_ADD,
     P_SUB,
     P_MUL,
@@ -31,7 +35,13 @@ enum PCodeType{
     P_DIM,
     P_NOT,
     P_LOADI,
-    P_LOAD
+    P_LOAD,
+    P_STO,
+    P_INPUT,
+    P_OUTPUT,
+    P_JPC,
+    P_JMP,
+    P_GPI
 };
 /*表格*/
     /*1.函数信息表*/
@@ -50,28 +60,31 @@ struct MainSymbolTable{
             int _DataTypeId,
             int _LineNumIndex,
             FuncInformationTab* _FunInformation,
-            int _IntValue
+            int* _IntDataAddr
             ) :
             NameIndex(_NameIndex),
             IdentTypeId(_IdentTypeId),
             DataTypeId(_DataTypeId),
             LineNumIndex(_LineNumIndex),
             FuncInformation(_FunInformation),
-            IntValue(_IntValue){}
+            IntDataAddr(_IntDataAddr){}
     int NameIndex;//传TokenList 的i位置
     int IdentTypeId;
     int DataTypeId;
     int LineNumIndex;//标识符在记录行号数组中的下标
     FuncInformationTab* FuncInformation;
-    int IntValue;
+    int* IntDataAddr;
 };
     /*4.PCOde表*/
 struct PCodeTable{
-    PCodeTable(int _PCodeOp, int _SubProLevel, int _SymListAddr):PCodeOp(_PCodeOp),SubProLevel(_SubProLevel),SymListAddr(_SymListAddr){}
+    PCodeTable(int _PCodeOp, int _SubProLevel, int* _SymListAddr):PCodeOp(_PCodeOp),SubProLevel(_SubProLevel),SymListAddr(_SymListAddr){}
     int PCodeOp;
     int SubProLevel;//所在分程序层次
-    int SymListAddr;//表示相对地址
+    int* SymListAddr;//表示相对地址
 };
+    /*5.数据存储表*/
+//extern vector<int>IntDataTable;
+
     //PCode
 extern vector<PCodeTable> PCodeList;
 
@@ -82,7 +95,7 @@ extern vector<int> SubProgramIndexTable;//存储栈中分程序第一个标识�
 
 
 /*符号表操作*/
-void SymTabInsert(int NameIndex, int& IdentTypeId, int& DataTypeId, int LineNumIndex, int InsertType, FuncInformationTab* FuncInformation, int IntValue);
+void SymTabInsert(int NameIndex, int& IdentTypeId, int& DataTypeId, int LineNumIndex, int InsertType, FuncInformationTab* FuncInformation, int* IntDataAddr);
 int SymTabFind(string token, int SymTabFindType);//查表
 void SymTabPop();
 void SymTabLoc(int Index);

@@ -5,6 +5,7 @@
 #include <bits/stdc++.h>
 #include "Lexical_analysi.h"
 #include "Syntax_analysis.h"
+#include "Interpretation_execution.h"
 #include "Table.h"
 
 #define DEBUG
@@ -39,14 +40,37 @@ int IsVoidReturn;
 char ErrorTypeList[15] = {'a','b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'};
 
 int ErrorPrintFlag = 0;
+/*代码生成*/
+int IntDataTable[50000];
+int IntDataTableTop;
+vector<int> Buffer;
+int BufferTop;
+    /*运行栈实现*/
+vector<int> RunStack;
 
+vector<PCodeTable> PCodeList;//PCode指令表
 int main() {
 
     #ifdef DEBUG
         setbuf(stdout, nullptr);
     #endif
-
     InitSymbolList();
+    /*输入文件打开*/
+    fstream MyIntputFile;
+    MyIntputFile.open("input.txt",ios_base::in);
+    if(MyIntputFile.is_open()){
+
+        while(MyIntputFile.good()){
+            string FileContents;
+            getline(MyIntputFile, FileContents);
+            Buffer.push_back(atoi(FileContents.c_str()));
+        }
+    }
+    MyIntputFile.close();
+    /*for(int i=0; i<Buffer.size(); i++){
+        printf("%d\n", Buffer[i]);
+    }*/
+
 	FILE* in = freopen("testfile.txt", "r", stdin);
     //FILE* out = freopen("error.txt", "w", stdout);
     //FILE* out = freopen("output.txt", "w", stdout);
@@ -64,7 +88,7 @@ int main() {
         	SymbolListLine[CurSymPos] = LineNum;
             //Token[CurSymPos] = token;
 			CurSymPos++;
-		} 
+		}
         
     }
     SymbolListN = CurSymPos;
@@ -72,8 +96,26 @@ int main() {
         CompUnit();
         Sym_map(SymbolList[CurSymPos]);
     }
-    /*目标代码的解释执行*/
+    /*for(int i=0; i<IntDataTableTop; i++){
+        printf("%d %d %d\n", i, IntDataTable[i], &IntDataTable[i]);
+    }*/
 
+    /*目标代码的解释执行*/
+    Interpretation_execution();
+
+    printf("%-40c----SYMBOLLIST----%39c\n",'|','|');
+
+    printf("|%-30s|%-12s|%-12s|%-12s|%-12s|%-12s|\n", "Name", "IdentType", "DataType", "LineNum", "Func", "Value");
+    int n = StackSymbolTable.size();
+    for(int i=0; i<n; i++){
+        printf("|%-30s|%-12d|%-12d|%-12d|%-12x|%-12d|\n",
+               TokenList[StackSymbolTable[i].NameIndex].c_str(),
+               StackSymbolTable[i].DataTypeId,
+               StackSymbolTable[i].IdentTypeId,
+               StackSymbolTable[i].LineNumIndex,
+               StackSymbolTable[i].FuncInformation,
+               *StackSymbolTable[i].IntDataAddr);
+    }
     fclose(stdin);
     //fclose(stdout);
     return 0;

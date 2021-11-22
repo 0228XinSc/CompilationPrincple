@@ -1,12 +1,7 @@
-int g(int a){
-
-}
-void f(){
-
-}
 int a;
+int k = 12;
 int main(){
-    a+1
-    g(f());
-    return
+    printf("hello %d\n%d world",a,k);
+    return 0;
 }
+//const int c = test;

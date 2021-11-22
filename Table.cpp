@@ -10,11 +10,11 @@
 
 /*填表*/
 void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumIndex,
-        int InsertType, FuncInformationTab* FuncInformation, int IntValue){
+        int InsertType, FuncInformationTab* FuncInformation, int* IntDataAddr){
     /*声明填表*/
     if(InsertType == DECLFLAG){
         if(SymTabFind(TokenList[NameIndex], DECLFLAG) == -1){
-            StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, FuncInformation, IntValue});
+            StackSymbolTable.push_back({NameIndex, IdentTypeId, DataTypeId, LineNumIndex, FuncInformation, IntDataAddr});
         }
         else if(SymTabFind(TokenList[NameIndex], DECLFLAG) >= 0){
             /*重复声明*/
@@ -32,12 +32,21 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
         }
     }
     /*打印符号表*/
-    /*printf("-----------------------------SYMBOLLIST------------------------------\n");
-    printf("-------------------------------INSERT--------------------------------\n");
+    /*
+    printf("%-40c----SYMBOLLIST----%39c\n",'|','|');
+
+    printf("|%-30s|%-12s|%-12s|%-12s|%-12s|%-12s|\n", "Name", "IdentType", "DataType", "LineNum", "Func", "Value");
     int n = StackSymbolTable.size();
     for(int i=0; i<n; i++){
-        printf("%-20s%-20d%-20d\n", TokenList[StackSymbolTable[i].NameIndex].c_str(), StackSymbolTable[i].DataTypeId, StackSymbolTable[i].IdentTypeId);
-    }*/
+        printf("|%-30s|%-12d|%-12d|%-12d|%-12x|%-12d|\n",
+                TokenList[StackSymbolTable[i].NameIndex].c_str(),
+                StackSymbolTable[i].DataTypeId,
+                StackSymbolTable[i].IdentTypeId,
+                StackSymbolTable[i].LineNumIndex,
+                StackSymbolTable[i].FuncInformation,
+                *StackSymbolTable[i].IntDataAddr);
+    }
+    */
 
 }
 /*查表*/

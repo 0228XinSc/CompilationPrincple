@@ -6,17 +6,27 @@
 
 #IncludeRegexTransform: 
 
-D:/University/3_1/CP/CompilationPrincple/Error.h
-vector
--
-
 D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.cpp
 vector
 -
+stdio.h
+-
+stdlib.h
+-
+string
+-
+sstream
+-
+Lexical_analysi.h
+D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
 Interpretation_execution.h
 D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.h
+Table.h
+D:/University/3_1/CP/CompilationPrincple/Table.h
 
 D:/University/3_1/CP/CompilationPrincple/Interpretation_execution.h
+vector
+-
 
 D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
 iostream
@@ -26,48 +36,6 @@ string
 map
 -
 
-D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.cpp
-vector
--
-Semantic_analysis.h
-D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
-Table.h
-D:/University/3_1/CP/CompilationPrincple/Table.h
-
-D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
-
-D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.cpp
-iostream
--
-stdio.h
--
-Lexical_analysi.h
-D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
-Syntax_analysis.h
-D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h
-Semantic_analysis.h
-D:/University/3_1/CP/CompilationPrincple/Semantic_analysis.h
-Table.h
-D:/University/3_1/CP/CompilationPrincple/Table.h
-Error.h
-D:/University/3_1/CP/CompilationPrincple/Error.h
-
-D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h
-vector
--
-Table.h
-D:/University/3_1/CP/CompilationPrincple/Table.h
-
-D:/University/3_1/CP/CompilationPrincple/Table.cpp
-stdio.h
--
-Table.h
-D:/University/3_1/CP/CompilationPrincple/Table.h
-Lexical_analysi.h
-D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
-Error.h
-D:/University/3_1/CP/CompilationPrincple/Error.h
-
 D:/University/3_1/CP/CompilationPrincple/Table.h
 string
 -
@@ -75,14 +43,4 @@ stack
 -
 vector
 -
-
-D:/University/3_1/CP/CompilationPrincple/main.cpp
-bits/stdc++.h
--
-Lexical_analysi.h
-D:/University/3_1/CP/CompilationPrincple/Lexical_analysi.h
-Syntax_analysis.h
-D:/University/3_1/CP/CompilationPrincple/Syntax_analysis.h
-Table.h
-D:/University/3_1/CP/CompilationPrincple/Table.h
 

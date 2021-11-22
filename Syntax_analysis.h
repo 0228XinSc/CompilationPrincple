@@ -12,10 +12,10 @@ void BType();           //基本类型
 void ConstDef(int Attr_DataType);        //常数定义
 void Ident(int& Attr_Index);           //标识符
 void ConstExp();        //常量表达式
-void ConstInitVal(int& Attr_CInitValue);    //常量初值
+void ConstInitVal();    //常量初值
 void VarDecl();         //变量声明
 void VarDef(int Attr_DataType);          //变量定义
-void InitVal(int& Attr_CInitValue);         //变量初值
+void InitVal();         //变量初值
 void Exp();             //表达式
 void FuncDef();         //函数定义
 void FuncType();        //函数类型
@@ -25,7 +25,7 @@ void MainFuncDef();     //主函数定义
 void Block();           //语句块定义
 void Stmt();            //语句
 void FormatString(int& FormatCNum);    //字符串
-void LVal(int& IdentTypeIdTemp);            //左值表达式
+void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex);            //左值表达式
 void Cond();            //条件表达式
 void LOrExp();          //逻辑或表达式
 void LAndExp();         //逻辑与表达式
