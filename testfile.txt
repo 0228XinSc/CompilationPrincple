@@ -1,7 +1,7 @@
-int a;
-int k = 12;
-int main(){
-    printf("hello %d\n%d world",a,k);
+int main()
+{
+    int p;
+    p= getint();
+    printf("%d",p);
     return 0;
 }
-//const int c = test;

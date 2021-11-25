@@ -20,7 +20,7 @@ void Exp();             //表达式
 void FuncDef();         //函数定义
 void FuncType();        //函数类型
 void FuncFParams(int& FParmNum, FuncInformationTab* FuncInformation);     //函数形参表
-void FuncFParam(int& DataType);      //函数形参
+void FuncFParam(int& DataType, int& FparmInDataIndex);      //函数形参
 void MainFuncDef();     //主函数定义
 void Block();           //语句块定义
 void Stmt();            //语句
@@ -38,7 +38,7 @@ void UnaryOp(int& UnaryOpType);         //单目运算符
 void PrimaryExp();      //基本表达式
 void Number(int& Attr_NumValue);          //数字
 void IntConst();        //整数
-void FuncRParams(int& RParmNum, int FParmList[], int FParamNum);     //函数实参表
+void FuncRParams(int& RParmNum, int FParmList[], int FParamNum, int FuncDefPosInSym);     //函数实参表
 
 
 #endif //COMPLIER_SYNTAX_ANALYSIS_H

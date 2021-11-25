@@ -3,6 +3,7 @@
 //
 
 #include <bits/stdc++.h>
+//#include <vdmdbg.h>
 #include "Lexical_analysi.h"
 #include "Syntax_analysis.h"
 #include "Interpretation_execution.h"
@@ -45,18 +46,29 @@ int IntDataTable[50000];
 int IntDataTableTop;
 vector<int> Buffer;
 int BufferTop;
+int IsFunc = -1;
+int WLable_inIntTabIndexA;
+int WLable_inIntTabIndexB;
+int ILable_inIntTabIndexA;
+int ILable_inIntTabIndexB;
+int UnaryOpNum = 0;
+string PrintfTemp;
     /*运行栈实现*/
 vector<int> RunStack;
-
+vector<int> RunStack_Func;
+queue<int> PrintStack;
+int StringFront;
+int Stringtail;
+int indata;
+//int MainReturn;
 vector<PCodeTable> PCodeList;//PCode指令表
 int main() {
 
-    #ifdef DEBUG
-        setbuf(stdout, nullptr);
-    #endif
     InitSymbolList();
     /*输入文件打开*/
-    fstream MyIntputFile;
+    //FILE* in1 = freopen("input.txt", "r", stdin);
+
+   /* fstream MyIntputFile;
     MyIntputFile.open("input.txt",ios_base::in);
     if(MyIntputFile.is_open()){
 
@@ -66,16 +78,15 @@ int main() {
             Buffer.push_back(atoi(FileContents.c_str()));
         }
     }
-    MyIntputFile.close();
+    MyIntputFile.close();*/
     /*for(int i=0; i<Buffer.size(); i++){
         printf("%d\n", Buffer[i]);
     }*/
-
-	FILE* in = freopen("testfile.txt", "r", stdin);
+	FILE* in = fopen("testfile.txt", "r");
     //FILE* out = freopen("error.txt", "w", stdout);
-    //FILE* out = freopen("output.txt", "w", stdout);
+    FILE* out = freopen("pcoderesult.txt", "w", stdout);
     /*读入字符串*/
-    while((CurC = getchar()) != EOF){
+    while((CurC = fgetc(in)) != EOF){
         InitCode[CurCPos++] = CurC;
     }
     InitCodeN = CurCPos;
@@ -100,10 +111,11 @@ int main() {
         printf("%d %d %d\n", i, IntDataTable[i], &IntDataTable[i]);
     }*/
 
+    //PCodeListPrint();
     /*目标代码的解释执行*/
     Interpretation_execution();
 
-    printf("%-40c----SYMBOLLIST----%39c\n",'|','|');
+    /*printf("%-40c----SYMBOLLIST----%39c\n",'|','|');
 
     printf("|%-30s|%-12s|%-12s|%-12s|%-12s|%-12s|\n", "Name", "IdentType", "DataType", "LineNum", "Func", "Value");
     int n = StackSymbolTable.size();
@@ -115,8 +127,7 @@ int main() {
                StackSymbolTable[i].LineNumIndex,
                StackSymbolTable[i].FuncInformation,
                *StackSymbolTable[i].IntDataAddr);
-    }
-    fclose(stdin);
-    //fclose(stdout);
+    }*/
+    fclose(stdout);
     return 0;
 }

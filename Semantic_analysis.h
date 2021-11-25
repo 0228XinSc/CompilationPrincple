@@ -6,7 +6,11 @@
 #define COMPILATIONPRINCPLE_SEMANTIC_ANALYSIS_H
 #include <vector>
 using namespace std;
-
+extern int WLable_inIntTabIndexA;
+extern int WLable_inIntTabIndexB;
+extern int ILable_inIntTabIndexA;
+extern int ILable_inIntTabIndexB;
+extern int UnaryOpNum;
 /*表达式*/
 void Sem_orr();
 void Sem_and();
@@ -34,6 +38,8 @@ void Sem_sto(int* Attr_ValueAddr);
 /*输入*/
 void Sem_input();
 /*输出*/
+void Sem_replace(int* Attr_TargetAddr);
+/*输出*/
 void Sem_output(int* Attr_TargetAddr);
 /*栈顶判断跳转*/
 void Sem_jpc(int* Attr_TargetAddr);
@@ -41,4 +47,13 @@ void Sem_jpc(int* Attr_TargetAddr);
 void Sem_gpi(int* Attr_TargetAddr);
 /*无条件跳转*/
 void Sem_jmp(int* Attr_TargetAddr);
+
+void Sem_toplus();
+void Sem_tominu();
+
+void Sem_gettop(int* Attr_TargetAddr);
+void Sem_jsr(int* Attr_TargetAddr);
+void Sem_str(int* Attr_TargetAddr);
+void Sem_return();
+void Sem_stop();
 #endif //COMPILATIONPRINCPLE_SEMANTIC_ANALYSIS_H

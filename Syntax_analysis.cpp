@@ -283,9 +283,11 @@ void UnaryExp(){
         /*symr*/
         /*调用函数，查找符号表对应的声明*/
         SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, CALLFLAG, NULL, 0);
+
         if(DataTypeIdTemp == 3){
             RParmDataType = 3;
         }
+
         int FuncDefPosInSym = SymTabFind(TokenList[NameIndexTemp], CALLFLAG);//获取函数声明在栈式符号表的位置
         int RParmNum = 0;//记录实参个数
         if(SymbolList[CurSymPos] == LPARENT){//LPARENT
@@ -294,7 +296,7 @@ void UnaryExp(){
 
             if(SymbolList[CurSymPos] != RPARENT){
 
-                FuncRParams(RParmNum, StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmList, StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmNum);//函数实参表
+                FuncRParams(RParmNum, StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmList, StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmNum, FuncDefPosInSym);//函数实参表
             }
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
@@ -309,7 +311,10 @@ void UnaryExp(){
         if(StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmNum != RParmNum){
             Error(ED);
         }
-		
+        IntDataTable[IntDataTableTop++] = PCodeList.size()+1;
+        Sem_str(&IntDataTable[IntDataTableTop-1]);
+        Sem_jsr(&StackSymbolTable[FuncDefPosInSym].FuncInformation->PCodeIndex);
+
     }
     /*PrimaryExp*/
 	else if(SymbolList[CurSymPos] == LPARENT||SymbolList[CurSymPos] == IDENFR||SymbolList[CurSymPos] == INTCON){
@@ -318,18 +323,21 @@ void UnaryExp(){
 	/*UnaryOp UnaryExp*/
     else if(SymbolList[CurSymPos] == PLUS||SymbolList[CurSymPos] == MINU||SymbolList[CurSymPos] == NOT){// + - !
         int UnaryOpType = -1;
-        UnaryOp(UnaryOpType);
-        UnaryExp();
 
+        UnaryOp(UnaryOpType);
+
+        UnaryExp();
+        /*取正或取负*/
         if(UnaryOpType == PLUS){
-            Sem_inc();//在栈顶元素+1
+            Sem_toplus();//+
         }
         else if(UnaryOpType == MINU){
-            Sem_dim();//在栈顶元素减一
+            Sem_tominu();//+
         }
         else if(UnaryOpType == NOT){
             Sem_not();
         }
+        UnaryOpNum = 0;
     }
     if(ErrorPrintFlag)
     printf("<UnaryExp>\n");
@@ -340,6 +348,7 @@ void UnaryExp(){
 void UnaryOp(int& UnaryOpType){
     if(SymbolList[CurSymPos] == PLUS||SymbolList[CurSymPos] == MINU||SymbolList[CurSymPos] == NOT){// + - !
         UnaryOpType = SymbolList[CurSymPos];
+        UnaryOpNum++;
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
     }
@@ -445,10 +454,11 @@ void IntConst(){
 }
 /*函数实参表*/
 //FuncRParams → Exp { ',' Exp }
-void FuncRParams(int& RParmNum, int FParamList[], int FParamNum){
+void FuncRParams(int& RParmNum, int FParamList[], int FParamNum, int FuncDefPosInSym){
     int i=0, n = FParamNum;
 
     Exp();//若进入Lval，更改实参数类型
+    Sem_gettop(StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmInDataIndex[RParmNum]);
     /*实参和形参类型是否匹配*/
     if(FParamList[i] != RParmDataType){
         Error(EE);
@@ -460,6 +470,7 @@ void FuncRParams(int& RParmNum, int FParamList[], int FParamNum){
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         Exp();
+        Sem_gettop(StackSymbolTable[FuncDefPosInSym].FuncInformation->FParmInDataIndex[RParmNum]);
         if(FParamList[i] != RParmDataType){//若形参和实参参数类型相等
             Error(EE);
         }
@@ -600,6 +611,7 @@ void InitVal(){
 /*函数定义*/
 // FuncDef → FuncType Ident '(' [FuncFParams] ')' Block
 void FuncDef(){
+    IsFunc = 1;
     if(SymbolList[CurSymPos] == INTTK){//INTTK
         FuncType();
         if(SymbolList[CurSymPos] == IDENFR){//INDEFR
@@ -611,6 +623,7 @@ void FuncDef(){
             /*symr*/
             /*插入符号表*/
             SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, 0);
+            int FuncInSymTab = StackSymbolTable.size()-1;
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
 
@@ -643,6 +656,7 @@ void FuncDef(){
                     //无后续分析，不需要加判断
                 }
                 IsIntReturn = 0;
+                StackSymbolTable[FuncInSymTab].FuncInformation->PCodeIndex = (int)PCodeList.size();
                 Block();
                 if(IsIntReturn == 0){
                     Error(EG);
@@ -662,6 +676,7 @@ void FuncDef(){
             /*symr*/
             /*插入符号表*/
             SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, 0);
+            int FuncInSymTab = StackSymbolTable.size()-1;
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
 
@@ -693,7 +708,9 @@ void FuncDef(){
                 }
 
                 IsVoidReturn = 1;
+                StackSymbolTable[FuncInSymTab].FuncInformation->PCodeIndex = (int)PCodeList.size();
                 Block();
+                Sem_return();
                 if(IsVoidReturn == 0){
                     Error(EF);
                 }
@@ -701,7 +718,7 @@ void FuncDef(){
             }
         }
 	}
-
+    IsFunc = -1;
     if(ErrorPrintFlag)
     printf("<FuncDef>\n");
 }
@@ -721,15 +738,20 @@ void FuncType(){
 //FuncFParams → FuncFParam { ',' FuncFParam }
 void FuncFParams(int& FParmNum, FuncInformationTab* FuncInformation){
     int FParamDataType = 0;
-    FuncFParam(FParamDataType);
-    FuncInformation->FParmList[FParmNum++] = FParamDataType;
+    int FparmInDataIndex = 0;
+    FuncFParam(FParamDataType, FparmInDataIndex);
+    FuncInformation->FParmList[FParmNum] = FParamDataType;
+    FuncInformation->FParmInDataIndex[FParmNum] = &IntDataTable[FparmInDataIndex];
+    FParmNum++;
     /*保持0维*/
     FParamDataType = 0;
     while(SymbolList[CurSymPos] == COMMA){//COMMA
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
-        FuncFParam(FParamDataType);
-        FuncInformation->FParmList[FParmNum++] = FParamDataType;
+        FuncFParam(FParamDataType, FparmInDataIndex);
+        FuncInformation->FParmList[FParmNum] = FParamDataType;
+        FuncInformation->FParmInDataIndex[FParmNum] = &IntDataTable[FparmInDataIndex];
+        FParmNum++;
         FParamDataType = 0;
     }
     if(ErrorPrintFlag)
@@ -738,7 +760,7 @@ void FuncFParams(int& FParmNum, FuncInformationTab* FuncInformation){
 
 /*函数形参*/
 //FuncFParam → BType Ident ['[' ']' { '[' ConstExp ']' }]
-void FuncFParam(int& FParamDataType){
+void FuncFParam(int& FParamDataType, int& FparmInDataIndex){
     if(SymbolList[CurSymPos] == INTTK){//INTTK
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
@@ -809,7 +831,9 @@ void FuncFParam(int& FParamDataType){
                 }
             }
             /*将形参变量插入符号表*/
-            SymTabInsert(FParamNameIndex, FParamIdentType, FParamDataType, FParamLineNumIndex, DECLFLAG, NULL, 0);
+            IntDataTable[IntDataTableTop++] = 0;
+            FparmInDataIndex = IntDataTableTop-1;
+            SymTabInsert(FParamNameIndex, FParamIdentType, FParamDataType, FParamLineNumIndex, DECLFLAG, NULL, &IntDataTable[FparmInDataIndex]);
         }
     }
     if(ErrorPrintFlag)
@@ -871,13 +895,13 @@ void Stmt(){
 
         /*还是在IntData中生成一个标号*/
         IntDataTable[IntDataTableTop++] = -1;
-        int Lable_inIntTabIndexA = IntDataTableTop-1;
+        ILable_inIntTabIndexA = IntDataTableTop-1;
         if(SymbolList[CurSymPos] == LPARENT){//LPARENT
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
             Cond();
             /*有条件跳转*/
-            Sem_jpc(&IntDataTable[Lable_inIntTabIndexA]);
+            //Sem_jpc(&IntDataTable[ILable_inIntTabIndexA]);
 
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
@@ -891,20 +915,20 @@ void Stmt(){
                 if(SymbolList[CurSymPos] == ELSETK){//ELSETK
                     /*还是在IntData中生成一个标号*/
                     IntDataTable[IntDataTableTop++] = -1;
-                    int Lable_inIntTabIndexB = IntDataTableTop-1;
-                    Sem_jmp(&IntDataTable[Lable_inIntTabIndexB]);
-                    Sem_gpi(&IntDataTable[Lable_inIntTabIndexA]);
-                    Sym_map(SymbolList[CurSymPos]);
+                    ILable_inIntTabIndexB = IntDataTableTop-1;
+                    //Sem_jmp(&IntDataTable[ILable_inIntTabIndexB]);
+                    //Sem_gpi(&IntDataTable[ILable_inIntTabIndexA]);
+                    //Sym_map(SymbolList[CurSymPos]);
                     CurSymPos = CurSymPos+1;
                     if(SymbolList[CurSymPos] == LBRACE){
                         SymTabLoc((int)StackSymbolTable.size());
                     }
 
                     Stmt();
-                    Sem_gpi(&IntDataTable[Lable_inIntTabIndexB]);
+                    //Sem_gpi(&IntDataTable[ILable_inIntTabIndexB]);
                 }
                 else{
-                    Sem_gpi(&IntDataTable[Lable_inIntTabIndexA]);
+                    //Sem_gpi(&IntDataTable[ILable_inIntTabIndexA]);
                 }
             }
             else{
@@ -933,8 +957,9 @@ void Stmt(){
         IsWhile.push_back(1);
         /*设置标号，labA*/
         IntDataTable[IntDataTableTop++] = PCodeList.size()-1;
-        int Lable_inIntTabIndexA = IntDataTableTop-1;
-        int Lable_inIntTabIndexB = -1;
+        WLable_inIntTabIndexA = IntDataTableTop-1;
+        IntDataTable[IntDataTableTop++] = PCodeList.size()-1;
+        WLable_inIntTabIndexB = IntDataTableTop-1;
 
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
@@ -943,7 +968,7 @@ void Stmt(){
             CurSymPos = CurSymPos+1;
             Cond();
             /*有条件跳转*/
-            Sem_jpc(&IntDataTable[Lable_inIntTabIndexB]);
+            //Sem_jpc(&IntDataTable[WLable_inIntTabIndexB]);
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
@@ -951,8 +976,8 @@ void Stmt(){
                     SymTabLoc((int)StackSymbolTable.size());
                 }*/
                 Stmt();
-                Sem_jmp(&IntDataTable[Lable_inIntTabIndexA]);
-                Sem_gpi(&IntDataTable[Lable_inIntTabIndexB]);
+                //Sem_jmp(&IntDataTable[WLable_inIntTabIndexA]);
+                //Sem_gpi(&IntDataTable[WLable_inIntTabIndexB]);
             }
             else{
                 Error(EJ);
@@ -970,6 +995,8 @@ void Stmt(){
         if(IsWhile.size() == 0){
             Error(EM);
         }
+        //Sem_jmp(&IntDataTable[WLable_inIntTabIndexB]);
+
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         if(SymbolList[CurSymPos] == SEMICN){//SEMICN
@@ -987,6 +1014,7 @@ void Stmt(){
         if(IsWhile.size() == 0){
             Error(EM);
         }
+        //Sem_jmp(&IntDataTable[WLable_inIntTabIndexA]);
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         if(SymbolList[CurSymPos] == SEMICN){//SEMICN
@@ -1016,6 +1044,11 @@ void Stmt(){
                 IsVoidReturn = 1;
             }
         }
+
+        //IntDataTable[IntDataTableTop++] =
+
+        Sem_return();
+        Sem_stop();
         /*函数中存在return*/
         IsIntReturn = 1;
     }
@@ -1028,13 +1061,14 @@ void Stmt(){
 
             int FormatCNum = 0, ExpNum = 0;//格式%d字符个数
             IntDataTable[IntDataTableTop++] = CurSymPos;
+            //StringStack.(TokenList[CurSymPos]);
             int FormatString_inTokenListIndex = IntDataTableTop-1;
             FormatString(FormatCNum);
             while(SymbolList[CurSymPos]== COMMA){//COMMA
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
                 Exp();
-                Sem_output(&IntDataTable[FormatString_inTokenListIndex]);
+                Sem_replace(&IntDataTable[FormatString_inTokenListIndex]);
                 //printf("%d ", &IntDataTable[FormatString_inTokenListIndex]);
                 ExpNum = ExpNum + 1;
             }
@@ -1115,11 +1149,12 @@ void Stmt(){
         	            if(SymbolList[CurSymPos] == RPARENT){//RPARENT
         	                Sym_map(SymbolList[CurSymPos]);
         	                CurSymPos = CurSymPos+1;
+        	                Sem_input();
         	                if(SymbolList[CurSymPos] == SEMICN){//SEMICN
         	                    Sym_map(SymbolList[CurSymPos]);
          	                   	CurSymPos = CurSymPos+1;
 
-         	                   	Sem_input();
+
          	                   	Sem_sto(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
         	                }
         	                else{
@@ -1364,7 +1399,9 @@ void RelExp(){
 /*主函数定义*/
 
 void MainFuncDef(){
-	
+    IntDataTable[IntDataTableTop++] = 0;
+    int Maintail = IntDataTableTop-1;
+    Sem_str(&IntDataTable[Maintail]);
 	if(SymbolList[CurSymPos] == MAINTK){
 		Sym_map(SymbolList[CurSymPos]);
 		CurSymPos = CurSymPos+1;
@@ -1391,6 +1428,7 @@ void MainFuncDef(){
         	}
 		}
 	}
+	Sem_gpi(&IntDataTable[Maintail]);
     if(ErrorPrintFlag)
 	cout << "<MainFuncDef>" << endl;
 }

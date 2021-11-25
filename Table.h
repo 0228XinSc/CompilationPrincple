@@ -38,16 +38,27 @@ enum PCodeType{
     P_LOAD,
     P_STO,
     P_INPUT,
+    P_REPLACE,
     P_OUTPUT,
     P_JPC,
     P_JMP,
-    P_GPI
+    P_JSR,
+    P_GPI,
+    P_TOPLUS,
+    P_TOMINU,
+    P_GETTOP,
+    P_STOP,
+    P_RETURN,
+    P_STR
 };
 /*表格*/
     /*1.函数信息表*/
 typedef struct FuncInformationTable{
     int FParmNum;
     int FParmList[500];
+    int* FParmInDataIndex[500];
+    int PCodeIndex;
+    int ReturnIndex;
 } FuncInformationTab;
     /*2.数组向量表*/
 
