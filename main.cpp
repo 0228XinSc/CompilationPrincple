@@ -42,8 +42,12 @@ char ErrorTypeList[15] = {'a','b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 
 int ErrorPrintFlag = 0;
 /*代码生成*/
-int IntDataTable[50000];
+vector<DataTable> DataStack;
+int IntDataTable[200000];
 int IntDataTableTop;
+int ArrayStorageArea[200000];
+int ArrayStorageAreaTop;
+
 vector<int> Buffer;
 int BufferTop;
 int IsFunc = -1;
@@ -63,28 +67,11 @@ int indata;
 //int MainReturn;
 vector<PCodeTable> PCodeList;//PCode指令表
 int main() {
-
+    setbuf(stdout, NULL);
     InitSymbolList();
-    /*输入文件打开*/
-    //FILE* in1 = freopen("input.txt", "r", stdin);
-
-   /* fstream MyIntputFile;
-    MyIntputFile.open("input.txt",ios_base::in);
-    if(MyIntputFile.is_open()){
-
-        while(MyIntputFile.good()){
-            string FileContents;
-            getline(MyIntputFile, FileContents);
-            Buffer.push_back(atoi(FileContents.c_str()));
-        }
-    }
-    MyIntputFile.close();*/
-    /*for(int i=0; i<Buffer.size(); i++){
-        printf("%d\n", Buffer[i]);
-    }*/
 	FILE* in = fopen("testfile.txt", "r");
     //FILE* out = freopen("error.txt", "w", stdout);
-    FILE* out = freopen("pcoderesult.txt", "w", stdout);
+    //FILE* out = freopen("pcoderesult.txt", "w", stdout);
     /*读入字符串*/
     while((CurC = fgetc(in)) != EOF){
         InitCode[CurCPos++] = CurC;
@@ -107,27 +94,11 @@ int main() {
         CompUnit();
         Sym_map(SymbolList[CurSymPos]);
     }
-    /*for(int i=0; i<IntDataTableTop; i++){
-        printf("%d %d %d\n", i, IntDataTable[i], &IntDataTable[i]);
-    }*/
 
-    //PCodeListPrint();
+    PCodeListPrint();
     /*目标代码的解释执行*/
     Interpretation_execution();
 
-    /*printf("%-40c----SYMBOLLIST----%39c\n",'|','|');
-
-    printf("|%-30s|%-12s|%-12s|%-12s|%-12s|%-12s|\n", "Name", "IdentType", "DataType", "LineNum", "Func", "Value");
-    int n = StackSymbolTable.size();
-    for(int i=0; i<n; i++){
-        printf("|%-30s|%-12d|%-12d|%-12d|%-12x|%-12d|\n",
-               TokenList[StackSymbolTable[i].NameIndex].c_str(),
-               StackSymbolTable[i].DataTypeId,
-               StackSymbolTable[i].IdentTypeId,
-               StackSymbolTable[i].LineNumIndex,
-               StackSymbolTable[i].FuncInformation,
-               *StackSymbolTable[i].IntDataAddr);
-    }*/
-    fclose(stdout);
+    //fclose(stdout);
     return 0;
 }

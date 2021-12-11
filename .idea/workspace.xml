@@ -22,21 +22,21 @@
       <change beforePath="$PROJECT_DIR$/Semantic_analysis.h" beforeDir="false" afterPath="$PROJECT_DIR$/Semantic_analysis.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Syntax_analysis.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Syntax_analysis.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Syntax_analysis.h" beforeDir="false" afterPath="$PROJECT_DIR$/Syntax_analysis.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Table.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Table.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Table.h" beforeDir="false" afterPath="$PROJECT_DIR$/Table.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XinSC.zip" beforeDir="false" afterPath="$PROJECT_DIR$/XinSC.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Interpretation_execution.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Table.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Table.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/main.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Syntax_analysis.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/Table.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CompilationPrincple.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CompilationPrincple.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CompilationPrincple.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testfile.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/编译器构造.md" beforeDir="false" afterPath="$PROJECT_DIR$/编译器构造.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcoderesult.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pcoderesult.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testfile1.txt" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,8 +67,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/main.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1394">
-                  <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="21" />
+                <state relative-caret-position="132">
+                  <caret line="44" column="27" selection-start-line="44" selection-start-column="27" selection-end-line="44" selection-end-column="27" />
                   <folding>
                     <element signature="e#89#117#0" expanded="true" />
                   </folding>
@@ -79,8 +79,20 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Lexical_analysi.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="5395">
-                  <caret line="375" column="9" lean-forward="true" selection-start-line="375" selection-start-column="9" selection-end-line="375" selection-end-column="9" />
+                <state relative-caret-position="-2163">
+                  <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+                  <folding>
+                    <element signature="e#63#82#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Lexical_analysi.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="84">
+                  <caret line="57" column="16" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="20" />
                 </state>
               </provider>
             </entry>
@@ -88,10 +100,31 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Semantic_analysis.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="693">
-                  <caret line="132" selection-start-line="132" selection-end-line="132" />
+                <state relative-caret-position="903">
+                  <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
                   <folding>
                     <element signature="e#42#59#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="5" column="15" lean-forward="true" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="253" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Semantic_analysis.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="244">
+                  <caret line="72" selection-start-line="72" selection-end-line="72" selection-end-column="3" />
+                  <folding>
+                    <element signature="e#138#155#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -100,10 +133,34 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Interpretation_execution.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="216">
-                  <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+                <state relative-caret-position="510">
+                  <caret line="55" selection-start-line="55" selection-end-line="55" />
                   <folding>
-                    <element signature="e#152#169#0" expanded="true" />
+                    <element signature="e#152#170#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Syntax_analysis.cpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-646">
+                  <caret line="471" column="54" selection-start-line="471" selection-start-column="54" selection-end-line="471" selection-end-column="54" />
+                  <folding>
+                    <element signature="e#129#148#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Table.cpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="672">
+                  <caret line="122" column="36" selection-start-line="122" selection-start-column="36" selection-end-line="122" selection-end-column="36" />
+                  <folding>
+                    <element signature="e#41#59#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -112,29 +169,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/testfile.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="84">
-                  <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/input.txt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Syntax_analysis.cpp">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="132">
-                  <caret line="919" column="22" selection-start-line="919" selection-start-column="22" selection-end-line="919" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#129#148#0" expanded="true" />
-                  </folding>
+                <state>
+                  <caret column="20" lean-forward="true" selection-start-column="20" selection-end-column="20" />
                 </state>
               </provider>
             </entry>
@@ -145,14 +181,18 @@
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/pcoderesult.txt">
-              <provider selected="true" editor-type-id="text-editor" />
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="42">
+                  <caret line="2" selection-start-line="2" selection-end-line="2" />
+                </state>
+              </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Interpretation_execution.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2289">
-                  <caret line="322" selection-start-line="322" selection-end-line="322" />
+                <state relative-caret-position="-8">
+                  <caret line="461" column="26" selection-start-line="461" selection-start-column="26" selection-end-line="461" selection-end-column="26" />
                   <folding>
                     <element signature="e#41#60#0" expanded="true" />
                   </folding>
@@ -163,8 +203,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Syntax_analysis.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="145">
-                  <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+                <state relative-caret-position="-456">
+                  <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
                   <folding>
                     <element signature="e#112#129#0" expanded="true" />
                   </folding>
@@ -172,11 +212,15 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Semantic_analysis.h">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/Table.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1197">
-                  <caret line="57" column="16" lean-forward="true" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
+                <state relative-caret-position="160">
+                  <caret line="133" column="53" selection-start-line="133" selection-start-column="53" selection-end-line="133" selection-end-column="53" />
+                  <folding>
+                    <element signature="e#41#58#0" expanded="true" />
+                    <element signature="e#321#760#1" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -184,19 +228,19 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/output.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="231">
-                  <caret line="11" selection-start-line="11" selection-end-line="11" />
+                <state relative-caret-position="714">
+                  <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Table.h">
+            <entry file="file://$PROJECT_DIR$/Syntax_analysis.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="355">
-                  <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+                <state>
+                  <caret line="57" column="19" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
                   <folding>
-                    <element signature="e#41#58#0" expanded="true" />
+                    <element signature="e#129#148#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -208,36 +252,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>return</find>
-      <find>FuncRp</find>
-      <find>Una</find>
-      <find>Return</find>
+      <find>IsFunc</find>
+      <find>Sem_loadi</find>
+      <find>Sem_load</find>
+      <find>constdef</find>
+      <find>vardef</find>
+      <find>onstdef</find>
+      <find>Lval</find>
+      <find>sem_gpi</find>
+      <find>FuncR</find>
+      <find>IntDataTable[IntDataTableTop++] = 0;</find>
+      <find>ArrayStorageAreaTop</find>
+      <find>if(StackSymbolTable[StackSymbolTable.size()-1].DataTypeId)</find>
+      <find>StackSymbolTable[StackSymbolTable.size()-1].DataTypeId</find>
+      <find>ArrayStorageAreaTop++</find>
       <find>Unary</find>
-      <find>IsDigit</find>
-      <find>sem_str</find>
-      <find>sr</find>
-      <find>FuncInformation-&gt;PCodeIndex</find>
-      <find>Void</find>
-      <find>VoidTK</find>
-      <find>output</find>
-      <find>input</find>
-      <find>ouput</find>
-      <find>jsr</find>
-      <find>gettop</find>
-      <find>P_OU</find>
-      <find>returntk</find>
-      <find>main</find>
-      <find>PRintftk</find>
-      <find>retu</find>
-      <find>1918</find>
-      <find>IFTk</find>
-      <find>Cond();</find>
       <find>sto</find>
-      <find>cin</find>
-      <find>getint</find>
-      <find>indata</find>
-      <find>block()</find>
-      <find>IfTk</find>
+      <find>Sem_sto</find>
+      <find>ASSIGN</find>
+      <find>stmt</find>
+      <find>Lval(</find>
+      <find>Sem_str</find>
+      <find>RunStack_Func</find>
+      <find>unary</find>
+      <find>FUNCFPARAMS</find>
+      <find>FUNCrPARAMS</find>
+      <find>FUNCrPARAM</find>
+      <find>FUNCfPARAM</find>
+      <find>block</find>
+      <find>SymTabFind</find>
+      <find>lval</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -250,30 +294,30 @@
         <option value="$PROJECT_DIR$/Symbol_Table.cpp" />
         <option value="$PROJECT_DIR$/Symbol_Table.h" />
         <option value="$PROJECT_DIR$/Lexical.cpp" />
-        <option value="$PROJECT_DIR$/Lexical_analysi.cpp" />
-        <option value="$PROJECT_DIR$/Table.cpp" />
         <option value="$PROJECT_DIR$/testfile1.txt" />
-        <option value="$PROJECT_DIR$/Syntax_analysis.h" />
         <option value="$PROJECT_DIR$/input.txt" />
-        <option value="$PROJECT_DIR$/pcoderesult.txt" />
         <option value="$PROJECT_DIR$/output.txt" />
-        <option value="$PROJECT_DIR$/Semantic_analysis.h" />
+        <option value="$PROJECT_DIR$/pcoderesult.txt" />
+        <option value="$PROJECT_DIR$/Lexical_analysi.cpp" />
+        <option value="$PROJECT_DIR$/Syntax_analysis.h" />
         <option value="$PROJECT_DIR$/Table.h" />
-        <option value="$PROJECT_DIR$/Semantic_analysis.cpp" />
-        <option value="$PROJECT_DIR$/Interpretation_execution.cpp" />
-        <option value="$PROJECT_DIR$/Interpretation_execution.h" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/testfile.txt" />
+        <option value="$PROJECT_DIR$/Interpretation_execution.cpp" />
+        <option value="$PROJECT_DIR$/Table.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/Interpretation_execution.h" />
+        <option value="$PROJECT_DIR$/Semantic_analysis.cpp" />
+        <option value="$PROJECT_DIR$/Semantic_analysis.h" />
         <option value="$PROJECT_DIR$/Syntax_analysis.cpp" />
       </list>
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
+    <option name="x" value="217" />
+    <option name="y" value="215" />
+    <option name="width" value="979" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -300,7 +344,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/output.txt" />
   </component>
   <component name="RunDashboard">
@@ -341,12 +385,16 @@
       <workItem from="1637298988004" duration="25982000" />
       <workItem from="1637369172609" duration="8994000" />
       <workItem from="1637539175083" duration="100210000" />
-      <workItem from="1637706712980" duration="12225000" />
+      <workItem from="1637706712980" duration="12446000" />
+      <workItem from="1638072201099" duration="9826000" />
+      <workItem from="1638704704125" duration="625000" />
+      <workItem from="1638928004662" duration="41396000" />
+      <workItem from="1639029920335" duration="40965000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="209224000" />
+    <option name="totallyTimeSpent" value="302257000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -358,46 +406,47 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.07171582" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15147454" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32577905" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32577905" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40651557" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32577905" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.41076487" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.3243626" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3286119" />
-      <window_info anchor="bottom" id="CMake" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32719547" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" weight="0.3297587" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.07171582" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15147454" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32577905" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32577905" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40651557" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32577905" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.41076487" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.3243626" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3286119" />
-      <window_info anchor="bottom" id="CMake" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32719547" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -452,7 +501,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Semantic_analysis.h</url>
-          <line>43</line>
+          <line>39</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -461,9 +510,19 @@
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>115</line>
-          <option name="timeStamp" value="87" />
+          <url>file://$PROJECT_DIR$/Interpretation_execution.cpp</url>
+          <line>347</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Interpretation_execution.cpp</url>
+          <line>357</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Interpretation_execution.cpp</url>
+          <line>19</line>
+          <option name="timeStamp" value="108" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -475,6 +534,10 @@
         <watch expression="CurSymPos" language="ObjectiveC" />
         <watch expression="SymbolListN" language="ObjectiveC" />
         <watch expression="SymbolList[CurSymPos]" language="ObjectiveC" />
+        <watch expression="IntDataTableTop" />
+        <watch expression="ArrayStorageArea" />
+        <watch expression="ArrayStorageAreaTop" />
+        <watch expression="SymbolListLine" />
       </configuration>
     </watches-manager>
   </component>
@@ -538,13 +601,6 @@
     <entry file="file://$PROJECT_DIR$/Error.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/编译器构造.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -559,100 +615,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testfile1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-223">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/testfile1.txt" />
     <entry file="file://$PROJECT_DIR$/input1.txt">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://D:/Software/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="933" selection-start-line="933" selection-end-line="933" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lexical_analysi.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-603">
-          <caret line="61" column="31" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Table.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-302">
-          <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/input.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Software/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/new_allocator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="135" selection-start-line="135" selection-end-line="135" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Table.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
-          <folding>
-            <element signature="e#41#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pcoderesult.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Syntax_analysis.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding>
-            <element signature="e#112#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Semantic_analysis.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="57" column="16" lean-forward="true" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Interpretation_execution.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2289">
-          <caret line="322" selection-start-line="322" selection-end-line="322" />
-          <folding>
-            <element signature="e#41#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://D:/Software/MinGW/mingw64/x86_64-w64-mingw32/include/vdmdbg.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -661,57 +626,161 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testfile.txt">
+    <entry file="file://$PROJECT_DIR$/input.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        <state relative-caret-position="105">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testfile" />
+    <entry file="file://D:/Software/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="933" selection-start-line="933" selection-end-line="933" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Software/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/new_allocator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Lexical_analysi.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5395">
-          <caret line="375" column="9" lean-forward="true" selection-start-line="375" selection-start-column="9" selection-end-line="375" selection-end-column="9" />
+        <state relative-caret-position="-2163">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding>
+            <element signature="e#63#82#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1394">
-          <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="21" />
+        <state relative-caret-position="132">
+          <caret line="44" column="27" selection-start-line="44" selection-start-column="27" selection-end-line="44" selection-end-column="27" />
           <folding>
             <element signature="e#89#117#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Semantic_analysis.cpp">
+    <entry file="file://$PROJECT_DIR$/Lexical_analysi.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
+        <state relative-caret-position="84">
+          <caret line="57" column="16" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interpretation_execution.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="461" column="26" selection-start-line="461" selection-start-column="26" selection-end-line="461" selection-end-column="26" />
           <folding>
-            <element signature="e#42#59#0" expanded="true" />
+            <element signature="e#41#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pcoderesult.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Syntax_analysis.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-456">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding>
+            <element signature="e#112#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Table.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="122" column="36" selection-start-line="122" selection-start-column="36" selection-end-line="122" selection-end-column="36" />
+          <folding>
+            <element signature="e#41#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testfile.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="20" lean-forward="true" selection-start-column="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Table.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="133" column="53" selection-start-line="133" selection-start-column="53" selection-end-line="133" selection-end-column="53" />
+          <folding>
+            <element signature="e#41#58#0" expanded="true" />
+            <element signature="e#321#760#1" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Interpretation_execution.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        <state relative-caret-position="510">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
           <folding>
-            <element signature="e#152#169#0" expanded="true" />
+            <element signature="e#152#170#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Semantic_analysis.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="72" selection-start-line="72" selection-end-line="72" selection-end-column="3" />
+          <folding>
+            <element signature="e#138#155#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Syntax_analysis.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="919" column="22" selection-start-line="919" selection-start-column="22" selection-end-line="919" selection-end-column="22" />
+        <state relative-caret-position="-646">
+          <caret line="471" column="54" selection-start-line="471" selection-start-column="54" selection-end-line="471" selection-end-column="54" />
           <folding>
             <element signature="e#129#148#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Semantic_analysis.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="903">
+          <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+          <folding>
+            <element signature="e#42#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="15" lean-forward="true" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="253" />
         </state>
       </provider>
     </entry>

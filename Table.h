@@ -49,7 +49,12 @@ enum PCodeType{
     P_GETTOP,
     P_STOP,
     P_RETURN,
-    P_STR
+    P_STR,
+    P_GETARY_PI,
+    P_SWP,
+    P_GETARY_VAL,
+    P_GETARY_BEGIN,
+    P_STOARY
 };
 /*表格*/
     /*1.函数信息表*/
@@ -61,7 +66,22 @@ typedef struct FuncInformationTable{
     int ReturnIndex;
 } FuncInformationTab;
     /*2.数组向量表*/
+typedef struct ArrayInformationTable{
+    int* ArrayTemp[10];
+    int ArrayTop;
 
+    /*        ______
+     *  ->TOP| P(2) |
+     *       | U(2) |
+     *       | 0 |
+     *       | P(1) |
+     *       | U(1) |
+     *       | 0 |
+     *       | Begin|
+     *       | dim  |
+     *       --------
+     */
+} ArrayInformationTab;
 
     /*3.主符号表*/
 struct MainSymbolTable{
@@ -71,6 +91,7 @@ struct MainSymbolTable{
             int _DataTypeId,
             int _LineNumIndex,
             FuncInformationTab* _FunInformation,
+            ArrayInformationTab* _ArrayInformation,
             int* _IntDataAddr
             ) :
             NameIndex(_NameIndex),
@@ -78,19 +99,22 @@ struct MainSymbolTable{
             DataTypeId(_DataTypeId),
             LineNumIndex(_LineNumIndex),
             FuncInformation(_FunInformation),
+            ArrayInformation(_ArrayInformation),
             IntDataAddr(_IntDataAddr){}
     int NameIndex;//传TokenList 的i位置
     int IdentTypeId;
     int DataTypeId;
     int LineNumIndex;//标识符在记录行号数组中的下标
     FuncInformationTab* FuncInformation;
-    int* IntDataAddr;
+    ArrayInformationTab* ArrayInformation;
+    int* IntDataAddr;//变量值在数据存储表中的指针
 };
     /*4.PCOde表*/
 struct PCodeTable{
-    PCodeTable(int _PCodeOp, int _SubProLevel, int* _SymListAddr):PCodeOp(_PCodeOp),SubProLevel(_SubProLevel),SymListAddr(_SymListAddr){}
+    PCodeTable(int _PCodeOp, int _SubProLevel, int _PCodeLineNum, int* _SymListAddr):PCodeOp(_PCodeOp),SubProLevel(_SubProLevel),PCodeLineNum(_PCodeLineNum), SymListAddr(_SymListAddr){}
     int PCodeOp;
     int SubProLevel;//所在分程序层次
+    int PCodeLineNum;//所在程序中的行号
     int* SymListAddr;//表示相对地址
 };
     /*5.数据存储表*/
@@ -106,7 +130,7 @@ extern vector<int> SubProgramIndexTable;//存储栈中分程序第一个标识�
 
 
 /*符号表操作*/
-void SymTabInsert(int NameIndex, int& IdentTypeId, int& DataTypeId, int LineNumIndex, int InsertType, FuncInformationTab* FuncInformation, int* IntDataAddr);
+void SymTabInsert(int NameIndex, int& IdentTypeId, int& DataTypeId, int LineNumIndex, int InsertType, FuncInformationTab* FuncInformation, ArrayInformationTab* _ArrayInformation, int* IntDataAddr);
 int SymTabFind(string token, int SymTabFindType);//查表
 void SymTabPop();
 void SymTabLoc(int Index);

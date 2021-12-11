@@ -25,7 +25,7 @@ void MainFuncDef();     //主函数定义
 void Block();           //语句块定义
 void Stmt();            //语句
 void FormatString(int& FormatCNum);    //字符串
-void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex);            //左值表达式
+void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex, int Attr_IsAssignLeft);            //左值表达式
 void Cond();            //条件表达式
 void LOrExp();          //逻辑或表达式
 void LAndExp();         //逻辑与表达式

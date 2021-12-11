@@ -14,6 +14,7 @@ CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj: ../Lexical_analysi.c
 CMakeFiles/CompilationPrincple.dir/Lexical_analysi.cpp.obj: ../Lexical_analysi.h
 
 CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Interpretation_execution.h
+CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Lexical_analysi.h
 CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Semantic_analysis.cpp
 CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Semantic_analysis.h
 CMakeFiles/CompilationPrincple.dir/Semantic_analysis.cpp.obj: ../Table.h
