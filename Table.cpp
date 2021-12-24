@@ -32,7 +32,7 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
         }
     }
     /*打印符号表*/
-
+    /*
     printf("%-24c%s%24c\n",'|', "----SYMBOLLIST----", '|');
 
     printf("|%-20s|%-10s|%-10s|%-10s|%-10s|\n", "Name", "IdentType", "DataType", "LineNum", "Func", "Value");
@@ -44,9 +44,9 @@ void SymTabInsert(int NameIndex, int& IdentTypeId, int &DataTypeId, int LineNumI
                 StackSymbolTable[i].IdentTypeId,
                 StackSymbolTable[i].LineNumIndex,
                 StackSymbolTable[i].FuncInformation);
-                //*StackSymbolTable[i].IntDataAddr);
+                //StackSymbolTable[i].IntDataAddr);
     }
-
+    */
 
 }
 /*查表*/
@@ -117,12 +117,12 @@ void SymTabReLoc(){
 
 
     /*打印符号表*/
-    printf("%d", SymbolListLine[CurSymPos]);
+    /*printf("%d", SymbolListLine[CurSymPos]);
     printf("-----------------------------SYMBOLLIST------------------------------\n");
     printf("----------------------------------POP----------------------------------\n");
     int n = StackSymbolTable.size();
     for(int i=0; i<n; i++){
         printf("%-20s%-20d%-20d\n", TokenList[StackSymbolTable[i].NameIndex].c_str(), StackSymbolTable[i].DataTypeId, StackSymbolTable[i].IdentTypeId);
-    }
+    }*/
 
 }

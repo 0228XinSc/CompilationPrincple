@@ -1,14 +1,62 @@
-int a(int i, int j){
-    printf("i = %d\n", i);
-	if(i == 1){
-		return 1;
-	}
-
-	return a(i-1,j+1)+i;
-}
-
 int main(){
-	int i = 4;
-	printf("%d", a(i, 1));
-	return 0;
-} 
+    printf("19182636\n");
+
+    int a = 5;
+    int b = 6;
+    int s1[6] = {0,1,2,3,6,12};
+    int s2[2][3] = {{10,11,12},{13,14,15}};
+
+printf("b = %d a = %d s1[4] = %d s1[1] = %d s1[0] = %d", b, a, s1[4], s1[1], s1[0]);
+
+    if(5>=6<=2){
+        		printf("k0\n");
+        	}
+        	else{
+        		printf("l0\n");
+        	}
+    if(a<=b>=s1[1]+1==0){
+    		printf("k1\n");
+    	}
+    	else{
+    		printf("l1\n");
+    	}
+    	if(b>=a+1 && b>=s1[4]+s1[1]!=1 && a<=b>=s1[1]+1==0){
+    		printf("k2\n");
+    	}
+    	else{
+    		printf("l2\n");
+    	}
+    if(b>=a+1 && b>=s1[4]+s1[1]!=1 && a<=b>=s1[1]+1==0 && a>=b>=s1[0]<=s1[0]!=1){
+        printf(">= is ok\n");
+    } else{
+        printf(">= has problem\n");
+    }
+
+    if(a != b && a==b==0 && a>b == a<b!=1 && a>=b == s1[2] != s1[0] != s1[4]){
+        printf("== != is ok\n");
+    } else {
+        printf("== != has problem\n");
+    }
+
+    if(s1[3] == s2[0][1] || a>=b || a+7%4 < b*3){
+        printf("or is ok\n");
+    } else {
+        printf("or has problem\n");
+    }
+
+    if(a/2<b-3 || s1[0]+1 > s1[5] && b > s1[5]){
+        printf("the priority of and/or is ok\n");
+    } else {
+        printf("the priority of and/or has problem\n");
+    }
+    
+   if(a < b || +a){
+        a = a + 1;
+        if(s1[0]<s1[1] && +b){
+            b = b + 1;
+            printf("%d %d\n",a,b);
+        }
+    }
+
+    return 0;
+}

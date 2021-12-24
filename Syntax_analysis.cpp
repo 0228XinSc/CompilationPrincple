@@ -109,32 +109,39 @@ void ConstDef(int Attr_DataType){
         // 初始化数组模板表,记录数组维数,对应维数的上下界以及计算对应P[i]
         ArrayInformationTab* ArrayInformation = new ArrayInformationTab;
         int ArrayTabTop = 0;
+        int ArrayTempBeginIndex = 0;
         if(SymbolList[CurSymPos] == LBRACK){
+            //ArrayTempBeginIndex = ArrayTempTop;//每个数组模板表长度为8，初始位置8位递增
+            Sem_initAry_tempbegin();
             //数组模板表中初始化维数
-            ArrayStorageArea[ArrayStorageAreaTop] = DataTypeIdTemp;
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-            //初始化在IntDataTab开始下标
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
+            //ArraySArea[ArraySAreaTop] = DataTypeIdTemp;//DataTypeIdTemp对应维数
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = DataTypeIdTemp;
+            //初始化数组开始下标
+            //ArraySArea[ArraySAreaTop] = 0;
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
         }
-
-
         /*symr*/
+        //加载
         while(SymbolList[CurSymPos] == LBRACK){//LBRACK
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
 
             ConstExp();
+            Sem_initAry_templvup();
             //初始化在IntDataTab 下界上界和对应P[i]
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;//上界
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;//上界
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
+            //ArraySArea[ArraySAreaTop] = 0;//下界
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
+            //ArraySArea[ArraySAreaTop] = 0;//上界
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
             //更改对应上界
-            Sem_gettop(ArrayInformation->ArrayTemp[ArrayTabTop-1]);//将对应维度数组上下界值，及p（i）填入
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;//P[i]
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-            //
+            //Sem_gettop(&ArrayTempArea[ArrayTempTop-1]);//将运行栈顶的exp加载到上界位置
+            //ArraySArea[ArraySAreaTop] = 0;//P[i]
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
 
             if(SymbolList[CurSymPos] == RBRACK){//RBRACK
                 Sym_map(SymbolList[CurSymPos]);
@@ -167,36 +174,57 @@ void ConstDef(int Attr_DataType){
         //i=n p(i) = 1
         //i<n p(i) = ((U(i+1)-L(i+1))+1) 之和
         if(DataTypeIdTemp == Array1){
-            *ArrayInformation->ArrayTemp[4] = 1;
+            //*ArrayInformation->ArrayTemp[4] = 1;
+            IntDataTable[IntDataTableTop++] = Array1;
+            Sem_getAry_pi(&IntDataTable[IntDataTableTop-1]);
+            //ArrayTempArea[ArrayTempBeginIndex+4] = 1;//i=n p(i) = 1
         }
         else if(DataTypeIdTemp == Array2){
-            *ArrayInformation->ArrayTemp[7] = 1;
-            Sem_load(ArrayInformation->ArrayTemp[6]);
-            Sem_getAry_pi(ArrayInformation->ArrayTemp[4]);
+            //*ArrayInformation->ArrayTemp[7] = 1;
+            IntDataTable[IntDataTableTop++] = Array2;
+            Sem_getAry_pi(&IntDataTable[IntDataTableTop-1]);
+            //ArrayTempArea[ArrayTempBeginIndex+7] = 1;//i=n=2 p(2) = 1
+            //Sem_load(&ArrayTempArea[ArrayTempBeginIndex+6]);//把U2加载到
+            //Sem_getAry_pi(&ArrayTempArea[ArrayTempBeginIndex+4]);//计算p(1)值
         }
-
         SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, ArrayInformation, &IntDataTable[IntDataTableTop-1]);
 
-        if(DataTypeIdTemp == Array1||DataTypeIdTemp == Array2){
-            //以IntDataTop作为数组首地址下标
-            *ArrayInformation->ArrayTemp[1] = ArrayStorageAreaTop;
-
+        //向数据栈中加载NameIndex， FuncIndex, ArrayTempIndex, Value
+        IntDataTable[IntDataTableTop++] = NameIndexTemp;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);//变量名
+        IntDataTable[IntDataTableTop++] = 0;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);//函数声明Pcode下标：不是函数，对用下标位置为0
+        if(DataTypeIdTemp != Array1&&DataTypeIdTemp != Array2){
+            IntDataTable[IntDataTableTop++] = -1;// 不是数组置-1
         }
-
+        else{
+            IntDataTable[IntDataTableTop++] = 0;// 是数组置模板初始位置
+            Sem_getAry_tempBegin(&IntDataTable[IntDataTableTop-1]);
+        }
+        Sem_load(&IntDataTable[IntDataTableTop-1]);// 对应数组的模板表初始位置ArrayTempIndex：
+        IntDataTable[IntDataTableTop++] = 0;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);// 变量值： 初值为0
+        //将当前变量插入数据栈中
+        Sem_dataStackInsert();
+        //更改数组模板表中[1]数组在ArraySArea中初始地址位置
+        /*if(DataTypeIdTemp == Array1||DataTypeIdTemp == Array2){
+            //以IntDataTop作为数组首地址下标
+            //*ArrayInformation->ArrayTemp[1] = ArraySAreaTop;
+            ArrayTempArea[ArrayTempBeginIndex+1] = ArraySAreaTop;
+        }*/
         if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
-            //printf("%x ", StackSymbolTable.back().IntDataAddr);
-            //Sem_load(StackSymbolTable.back().IntDataAddr);
-
-            //int Attr_CInitValue = 0;初值不用作为属性，其初值最后应该在栈顶，用sto指令即可
+            // int Attr_CInitValue = 0;初值不用作为属性，其初值最后应该在栈顶，用sto指令即可
 
             ConstInitVal();
 
-            //在0维情况下在赋值，数组直接在constexp中将对应值，放入以当前存储地址开始的intdata表中
+            // 在0维情况下在赋值，数组直接在constexp中将对应值，放入以当前存储地址开始的intdata表中
             if(DataTypeIdTemp == Int){
-                Sem_sto(StackSymbolTable.back().IntDataAddr);
-                printf("%d\n", *StackSymbolTable.back().IntDataAddr);
+            // 声明赋值，参数是CALLFlag，执行该pcode 将
+            IntDataTable[IntDataTableTop++] = DECLFLAG;
+            Sem_sto(&IntDataTable[IntDataTableTop-1]);
+            // printf("%d\n", *StackSymbolTable.back().IntDataAddr);
             }
 
         }
@@ -237,16 +265,15 @@ void ConstInitVal(){
 		}
 	}
 	else{
-	    /*每遇见一个初值，都放到intDatatab里，实现数组元素的存储*/
-
+        /*每遇见一个初值，都放到intDatatab里，实现数组元素的存储*/
 		ConstExp();
 		if(StackSymbolTable[StackSymbolTable.size()-1].DataTypeId == Array1 ||
 		   StackSymbolTable[StackSymbolTable.size()-1].DataTypeId == Array2 ){
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;
-            Sem_gettop(&ArrayStorageArea[ArrayStorageAreaTop]);
-            ArrayStorageAreaTop++;
+            //ArraySArea[ArraySAreaTop] = 0;
+            //Sem_gettop(&ArraySArea[ArraySAreaTop]);//将初值加载到数组元素存储区中
+            //ArraySAreaTop++;
+            Sem_initCAry_sArea();
 		}
-
 	}
 	if(ErrorPrintFlag)
         printf("<ConstInitVal>\n");
@@ -338,16 +365,13 @@ void UnaryExp(){
         int Attr_Index;
         Ident(Attr_Index);
         /*syml*/
-        int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 1, DataTypeIdTemp = -1, LineNumIndexTemp = CurSymPos-1;
+        int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = Func, DataTypeIdTemp = 0, LineNumIndexTemp = CurSymPos-1;
         /*symr*/
         /*调用函数，查找符号表对应的声明*/
         SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, CALLFLAG, NULL, NULL, 0);
 
-        if(DataTypeIdTemp == 3){
-            RParmDataType = 3;
-        }
-
-        int FuncDefPosInSym = SymTabFind(TokenList[NameIndexTemp], CALLFLAG);//获取函数声明在栈式符号表的位置
+        //获取函数声明在栈式符号表的位置
+        int FuncDefPosInSym = SymTabFind(TokenList[NameIndexTemp], CALLFLAG);
         int RParmNum = 0;//记录实参个数
         if(SymbolList[CurSymPos] == LPARENT){//LPARENT
             Sym_map(SymbolList[CurSymPos]);
@@ -371,10 +395,15 @@ void UnaryExp(){
             Error(ED);
         }
         //将返回地址存放在存储区
-        IntDataTable[IntDataTableTop++] = PCodeList.size()+1;
+        IntDataTable[IntDataTableTop++] = PCodeList.size()+3;//3是存放应该返回位置，返回应该是jsr后一个指令，当前指令表加3
         Sem_str(&IntDataTable[IntDataTableTop-1]);
-        //跳转到PcodeList对应函数声明处，执行函数中指令序列
-        Sem_jsr(&StackSymbolTable[FuncDefPosInSym].FuncInformation->PCodeIndex);//
+        // 获取函数PCODE表声明位置
+        // 此处加生成指令，将上一行3也要修改
+        IntDataTable[IntDataTableTop++] = NameIndexTemp;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);
+        Sem_dataStackFind();
+        // 跳转到PcodeList对应函数声明处，执行函数中指令序列
+        Sem_jsr();
 
     }
     /*PrimaryExp*/
@@ -434,8 +463,9 @@ void PrimaryExp(){
     else if(SymbolList[CurSymPos] == INTCON){//INTCON
         int Attr_NumValue;
         Number(Attr_NumValue);
-        IntDataTable[IntDataTableTop++] = Attr_NumValue;
         //int* Attr_NumValueAddr = &Attr_NumValue;
+
+        IntDataTable[IntDataTableTop++] = Attr_NumValue;
         Sem_loadi(&IntDataTable[IntDataTableTop-1]);
     }
     else{
@@ -469,15 +499,29 @@ void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex, int Attr_IsAssignLeft){
     /*symr*/
     /*调用变量，查找符号表,获得变量信息， 将DataTypeIdTemp作为维数*/
 
-    Attr_StackSymIndex = SymTabFind(TokenList[Attr_Index], CALLFLAG);
+    Attr_StackSymIndex = SymTabFind(TokenList[NameIndexTemp], CALLFLAG);
     DataTypeIdTemp = StackSymbolTable[Attr_StackSymIndex].DataTypeId;
     IdentTypeIdTemp = StackSymbolTable[Attr_StackSymIndex].IdentTypeId;
-
+    //生成寻找数据栈对应变量的指令
+    //先加载寻找的变量名字下标
+    IntDataTable[IntDataTableTop++] = NameIndexTemp;
+    Sem_load(&IntDataTable[IntDataTableTop-1]);
+    Sem_dataStackFind();
     /*对于实参维数的判断,因为获得变量声明时的数据类型，调用时，若遇见一个右中括号说明，将维数减一 如int a[],func(a), 代表a是1维， func(a[]), 代表a是0维*/
+    int pi = 4;
+
+    int PiIndexInData = IntDataTableTop-1;
     while(SymbolList[CurSymPos] == LBRACK){//LBRACK
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
+        //load pi
+        IntDataTable[IntDataTableTop++] = pi;
+        Sem_LoadAry_pi(&IntDataTable[IntDataTableTop-1]);
         Exp();
+        Sem_mul();
+        Sem_swp();
+        pi+=3;//p2= p1+3
+
         if(SymbolList[CurSymPos] == RBRACK){//RBRACK
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
@@ -490,61 +534,89 @@ void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex, int Attr_IsAssignLeft){
     }
     RParmDataType = DataTypeIdTemp;
     //printf("%x ", StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
+    //等号右边调用值
     if(Attr_IsAssignLeft == 0){
+
         if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Int){
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
+            Sem_loadDataIndex();
         }
         else if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array1){
             //计算数组元素位置，获得V(1)，运行栈栈顶
-            printf("%d", Attr_StackSymIndex);
-            printf("%d\n",StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);
-            Sem_mul();
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
-            Sem_add();
-            Sem_getAry_val();
+            //printf("%d", Attr_StackSymIndex);
+            //printf("%d\n",StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);//P(1)
+            //Sem_mul();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
+            if(DataTypeIdTemp == Int){
+                Sem_LoadAry_begin();
+                Sem_add();
+                Sem_getAry_val();
+            }
+            else if(DataTypeIdTemp == Array1){
+                //函数调用，DataTypeIdtemp没有经过中括号
+                //将模板表位置加载到栈顶
+                Sem_LoadAry_temp();
+            }
+
         }
         else if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array2){
             //计算数组元素位置，获得V(2)，运行栈栈顶
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[7]);
-            Sem_mul();
-            Sem_swp();
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);
-            Sem_mul();
-            Sem_add();
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
-            Sem_add();
-            Sem_getAry_val();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[7]);
+            //Sem_mul();
+            //Sem_swp();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);
+            //Sem_mul();
+            //Sem_add();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
+            if(DataTypeIdTemp == Int){
+                Sem_LoadAry_begin();
+                Sem_add();
+                Sem_add();
+                Sem_getAry_val();
+            }
+            else if(DataTypeIdTemp == Array1){
+                //新生成一个模板表
+                Sem_newAry_temp();
+
+            }
+            else if(DataTypeIdTemp == Array2){
+                //函数调用，DataTypeIdtemp没有经过中括号
+                //将模板表位置加载到栈顶
+                Sem_LoadAry_temp();
+            }
+
         }
     }
+    //左边调用元素地址
     else{
         if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Int){
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
+            //Sem_loadDataIndex();
         }
         else if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array1){
             //计算数组元素位置，获得V(1)，运行栈栈顶
-            printf("%d", Attr_StackSymIndex);
-            printf("%d\n",StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);
-            Sem_mul();
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
+            //printf("%d", Attr_StackSymIndex);
+            //printf("%d\n",StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);
+            //Sem_LoadAry_pi();
+            //Sem_mul();
+            Sem_LoadAry_begin();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
             Sem_add();
         }
         else if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array2){
             //计算数组元素位置，获得V(2)，运行栈栈顶
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[7]);
-            Sem_mul();
-            Sem_swp();
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);
-            Sem_mul();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[7]);//p2
+            //Sem_mul();
+            //Sem_swp();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[4]);//p1
+            //Sem_mul();
+            //Sem_add();
+            //Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
+            Sem_LoadAry_begin();
             Sem_add();
-            Sem_load(StackSymbolTable[Attr_StackSymIndex].ArrayInformation->ArrayTemp[1]);
             Sem_add();
         }
     }
-
-
-
     if(ErrorPrintFlag)
         printf("<LVal>\n");
 }
@@ -565,7 +637,6 @@ void IntConst(){
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
     }
-
 }
 /*函数实参表*/
 //FuncRParams → Exp { ',' Exp }
@@ -648,32 +719,39 @@ void VarDef(int Attr_DataType){
         // 初始化数组模板表,记录数组维数,对应维数的上下界以及计算对应P[i]
         ArrayInformationTab* ArrayInformation = new ArrayInformationTab;
         int ArrayTabTop = 0;
+        //int ArrayTempBeginIndex = 0;
         if(SymbolList[CurSymPos] == LBRACK){
+            //ArrayTempBeginIndex = ArrayTempTop;//每个数组模板表长度为8，初始位置8位递增
+            Sem_initAry_tempbegin();
             //数组模板表中初始化维数
-            ArrayStorageArea[ArrayStorageAreaTop] = DataTypeIdTemp;
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-            //初始化在IntDataTab开始下标
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-
+            //ArraySArea[ArraySAreaTop] = DataTypeIdTemp;//DataTypeIdTemp对应维数
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = DataTypeIdTemp;
+            //初始化在数组开始下标
+            //ArraySArea[ArraySAreaTop] = 0;
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
         }
         /*symr*/
         while(SymbolList[CurSymPos] == LBRACK ){//LBRACK
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
 
-
             ConstExp();
+            Sem_initAry_templvup();
             //初始化在IntDataTab 下界上界和对应P[i]
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;//上界
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;//上界
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
+            //ArraySArea[ArraySAreaTop] = 0;//下界
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
+            //ArraySArea[ArraySAreaTop] = 0;//上界
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
             //更改对应上界
-            Sem_gettop(ArrayInformation->ArrayTemp[ArrayTabTop-1]);//将对应维度数组上下界值，及p（i）填入
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;//P[i]
-            ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArrayStorageArea[ArrayStorageAreaTop++];
-            //
+            //Sem_gettop(&ArrayTempArea[ArrayTempTop-1]);//将运行栈顶的exp加载到上界位置
+            //ArraySArea[ArraySAreaTop] = 0;//P[i]
+            //ArrayInformation->ArrayTemp[ArrayTabTop++] = &ArraySArea[ArraySAreaTop++];
+            //ArrayTempArea[ArrayTempTop++] = 0;
+
             if(SymbolList[CurSymPos] == RBRACK){//RBRACK
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
@@ -705,43 +783,84 @@ void VarDef(int Attr_DataType){
         //i=n p(i) = 1
         //i<n p(i) = ((U(i+1)-L(i+1))+1) 之和
         if(DataTypeIdTemp == Array1){
-            *ArrayInformation->ArrayTemp[4] = 1;
+            //*ArrayInformation->ArrayTemp[4] = 1;
+            IntDataTable[IntDataTableTop++] = Array1;
+            Sem_getAry_pi(&IntDataTable[IntDataTableTop-1]);
+            //ArrayTempArea[ArrayTempBeginIndex+4] = 1;//i=n p(i) = 1
         }
         else if(DataTypeIdTemp == Array2){
-            *ArrayInformation->ArrayTemp[7] = 1;
-            Sem_load(ArrayInformation->ArrayTemp[6]);
-            Sem_getAry_pi(ArrayInformation->ArrayTemp[4]);
+            //*ArrayInformation->ArrayTemp[7] = 1;
+            IntDataTable[IntDataTableTop++] = Array2;
+            Sem_getAry_pi(&IntDataTable[IntDataTableTop-1]);
+            //ArrayTempArea[ArrayTempBeginIndex+7] = 1;//i=n=2 p(2) = 1
+            //Sem_load(&ArrayTempArea[ArrayTempBeginIndex+6]);//把U2加载到
+            //Sem_getAry_pi(&ArrayTempArea[ArrayTempBeginIndex+4]);//计算p(1)值
         }
-
         SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, NULL, ArrayInformation, &IntDataTable[IntDataTableTop-1]);
 
+        //向数据栈中加载NameIndex， FuncIndex, ArrayTempIndex, Value
+        IntDataTable[IntDataTableTop++] = NameIndexTemp;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);//变量名
+        IntDataTable[IntDataTableTop++] = 0;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);//函数声明Pcode下标：不是函数，对用下标位置为0
+        if(DataTypeIdTemp != Array1&&DataTypeIdTemp != Array2){
+            IntDataTable[IntDataTableTop++] = -1;// 不是数组置-1
+        }
+        else{
+            //IntDataTable[IntDataTableTop++] = ArrayTempBeginIndex;// 是数组置模板初始位置
+            IntDataTable[IntDataTableTop++] = 0;// 是数组置模板初始位置
+            Sem_getAry_tempBegin(&IntDataTable[IntDataTableTop-1]);
+        }
+        Sem_load(&IntDataTable[IntDataTableTop-1]);// 对应数组的模板表初始位置ArrayTempIndex：
+        IntDataTable[IntDataTableTop++] = 0;
+        Sem_load(&IntDataTable[IntDataTableTop-1]);//未赋值时变量 为0
+        //将当前变量插入数据栈中
+        Sem_dataStackInsert();
+        //Sem_load(StackSymbolTable[StackSymbolTable.size()-1].IntDataAddr);
+        //变量声明有初始值，才直接更改arraytemp[1]初始地址位置
+        //更改数组模板表中[1]数组在ArraySArea中初始地址位置
+        /*if(DataTypeIdTemp == Array1||DataTypeIdTemp == Array2){
+            //以IntDataTop作为数组首地址下标
+            //*ArrayInformation->ArrayTemp[1] = ArraySAreaTop;
+            ArrayTempArea[ArrayTempBeginIndex+1] = ArraySAreaTop;
+        }*/
 
         if(SymbolList[CurSymPos] == ASSIGN){//ASSIGN
-            if(DataTypeIdTemp == Array1||DataTypeIdTemp == Array2){
-                //以IntDataTop作为数组首地址下标
-                *ArrayInformation->ArrayTemp[1] = ArrayStorageAreaTop;
-
-            }
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
-            //printf("%d\n", StackSymbolTable.back().IntDataAddr);
-            //Sem_load(StackSymbolTable[StackSymbolTable.size()-1].IntDataAddr);
+
 
             //int Attr_CInitValue = 0;初值不用作为属性，其初值最后应该在栈顶，用sto指令即可
             InitVal();
 
             //在0维情况下在赋值，数组直接在constexp中将对应值，放入以当前存储地址开始的intdata表中
             if(DataTypeIdTemp == Int){
-                Sem_sto(StackSymbolTable.back().IntDataAddr);
+                //声明赋值，参数是CALLFlag，执行该pcode 将
+                IntDataTable[IntDataTableTop++] = DECLFLAG;
+                Sem_sto(&IntDataTable[IntDataTableTop-1]);
             }
         }
         else{
             /*没有赋初值，需要将存储区先划分出来*/
-            if(DataTypeIdTemp == Array1||DataTypeIdTemp == Array2){
+            if(DataTypeIdTemp == Array1){
                 //以IntDataTop作为数组首地址下标
-                //在执行时，通过U（i）*U(i)获得数组大小
+                //在执行时，通过U（1）*U(2)获得数组大小
                 //设置存储区开始地址
-                Sem_getAry_begin(ArrayInformation->ArrayTemp[1]);
+                //Sem_getAry_begin(ArrayInformation->ArrayTemp[1]);
+                //先要获得
+                //Sem_load(&ArrayTempArea[ArrayTempBeginIndex+3]);//u1
+                //IntDataTable[IntDataTableTop++] = 1;
+                //Sem_load(&IntDataTable[IntDataTableTop-1]);//1
+                IntDataTable[IntDataTableTop++] = Array1;
+                Sem_initVAry_sArea(&IntDataTable[IntDataTableTop-1]);
+                //Sem_getAry_begin(&ArrayTempArea[ArrayTempBeginIndex+1]);
+            }
+            else if(DataTypeIdTemp == Array2){
+                IntDataTable[IntDataTableTop++] = Array2;
+                Sem_initVAry_sArea(&IntDataTable[IntDataTableTop-1]);
+                //Sem_load(&ArrayTempArea[ArrayTempBeginIndex+3]);//u1
+                //Sem_load(&ArrayTempArea[ArrayTempBeginIndex+6]);//1
+                //Sem_getAry_begin(&ArrayTempArea[ArrayTempBeginIndex+1]);
             }
         }
     }
@@ -777,9 +896,7 @@ void InitVal(){
         Exp();
         if(StackSymbolTable[StackSymbolTable.size()-1].DataTypeId == Array1 ||
            StackSymbolTable[StackSymbolTable.size()-1].DataTypeId == Array2 ){
-            ArrayStorageArea[ArrayStorageAreaTop] = 0;
-            Sem_gettop(&ArrayStorageArea[ArrayStorageAreaTop]);
-            ArrayStorageAreaTop++;
+            Sem_loadAry_elm();//将初值加载到数组元素存储区中
         }
 
     }
@@ -790,7 +907,7 @@ void InitVal(){
 /*函数定义*/
 // FuncDef → FuncType Ident '(' [FuncFParams] ')' Block
 void FuncDef(){
-    IsFunc = 1;
+
     if(SymbolList[CurSymPos] == INTTK){//INTTK
         FuncType();
         if(SymbolList[CurSymPos] == IDENFR){//INDEFR
@@ -800,17 +917,27 @@ void FuncDef(){
             FuncInformationTab* FuncInformation = new FuncInformationTab;
             int NameIndexTemp = CurSymPos-1, IdentTypeIdTemp = 1, DataTypeIdTemp = 0, LineNumIndexTemp = CurSymPos-1;//行号就是标识符所处的行
             /*symr*/
-            /*插入符号表*/
+            //插入符号表
             SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, NULL, 0);
-            int FuncInSymTab = StackSymbolTable.size()-1;
+            //插入数据栈中
+            IntDataTable[IntDataTableTop++] = NameIndexTemp;//函数名对应下标
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = (int)PCodeList.size()+3;//函数所在Pcode位置
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = -1;// 不是数组置-1
+            Sem_load(&IntDataTable[IntDataTableTop-1]);// 对应数组的模板表初始位置：
+            IntDataTable[IntDataTableTop++] = 0;//值
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            Sem_dataStackInsert();//插入数据栈
+
+            IsFunc = 1;
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
+            Sem_dataStackFuncLoc();
 
             if(SymbolList[CurSymPos] == LPARENT){//LPARENT
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
-                //获得函数声明对应PCodeList的地址下标
-                StackSymbolTable[FuncInSymTab].FuncInformation->PCodeIndex = (int)PCodeList.size();
                 if(SymbolList[CurSymPos] != RPARENT){
                     /*syml*/
                     int FParmNum = 0;
@@ -818,11 +945,15 @@ void FuncDef(){
                     int CurIntDataTableIndex = IntDataTableTop;
                     FuncFParams(FParmNum, FuncInformation);//获取函数形参个数和各个形参的数据类型
                     //将运行栈中的实参加载到对应形参地址
-                    IntDataTableTop--;
-                    while(IntDataTableTop >= CurIntDataTableIndex){
-                        Sem_gettop(&IntDataTable[IntDataTableTop--]);
+                    for(int i=0; i<FParmNum; i++){
+                        IntDataTable[IntDataTableTop++] = i;
+                        if(FuncInformation->FParmList[FParmNum-i-1] == Array1||FuncInformation->FParmList[FParmNum-i-1] == Array2){
+                            Sem_stoAry_param(&IntDataTable[IntDataTableTop-1]);
+                        }
+                        else{
+                            Sem_stoInt_param(&IntDataTable[IntDataTableTop-1]);
+                        }
                     }
-                    IntDataTableTop=IntDataTableTop+FParmNum+1;
                     /*syml*/
                     FuncInformation->FParmNum = FParmNum;
                     /*symr*/
@@ -842,7 +973,7 @@ void FuncDef(){
                 }
                 IsIntReturn = 0;
 
-                Block();
+                Block(0);
                 if(IsIntReturn == 0){
                     Error(EG);
                 }
@@ -861,9 +992,20 @@ void FuncDef(){
             /*symr*/
             /*插入符号表*/
             SymTabInsert(NameIndexTemp, IdentTypeIdTemp, DataTypeIdTemp, LineNumIndexTemp, DECLFLAG, FuncInformation, NULL, 0);
-            int FuncInSymTab = StackSymbolTable.size()-1;
+            //插入数据栈中
+            IntDataTable[IntDataTableTop++] = NameIndexTemp;//函数名对应下标
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = (int)PCodeList.size()+3;//函数所在Pcode位置
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = -1;// 不是数组置-1
+            Sem_load(&IntDataTable[IntDataTableTop-1]);// 对应数组的模板表初始位置：
+            IntDataTable[IntDataTableTop++] = 0;//函数值
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            Sem_dataStackInsert();//插入数据栈
+            IsFunc = 1;
             /*定位*/
             SymTabLoc((int)StackSymbolTable.size());
+            Sem_dataStackFuncLoc();
 
             if(SymbolList[CurSymPos] == LPARENT){//LPARENT
                 Sym_map(SymbolList[CurSymPos]);
@@ -873,10 +1015,18 @@ void FuncDef(){
                     int FParmNum = 0;
                     /*symr*/
                     FuncFParams(FParmNum, FuncInformation);
-
                     /*syml*/
                     FuncInformation->FParmNum = FParmNum;
                     /*symr*/
+                    for(int i=0; i<FParmNum; i++){
+                        IntDataTable[IntDataTableTop++] = i;
+                        if(FuncInformation->FParmList[FParmNum-i-1] == Array1||FuncInformation->FParmList[FParmNum-i-1] == Array2){
+                            Sem_stoAry_param(&IntDataTable[IntDataTableTop-1]);
+                        }
+                        else{
+                            Sem_stoInt_param(&IntDataTable[IntDataTableTop-1]);
+                        }
+                    }
                 }
                 else{
                     /*syml*/
@@ -887,16 +1037,16 @@ void FuncDef(){
                 if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                     Sym_map(SymbolList[CurSymPos]);
                     CurSymPos = CurSymPos+1;
+
                 }
                 else{
                     Error(EJ);
                 }
 
-                IsVoidReturn = 1;
-                //获得函数声明对应PCodeList的地址下标
-                StackSymbolTable[FuncInSymTab].FuncInformation->PCodeIndex = (int)PCodeList.size();
-                Block();
-                Sem_return();
+                IsVoidReturn = 1;//判断错误处理
+
+                Block(1);//是void函数的block
+                Sem_return();//生成返回指令，返回到调用点之后,应该在block里面
                 if(IsVoidReturn == 0){
                     Error(EF);
                 }
@@ -937,6 +1087,7 @@ void FuncFParams(int& FParmNum, FuncInformationTab* FuncInformation){
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         FuncFParam(FParamDataType, FparmInDataIndex);
+
         FuncInformation->FParmList[FParmNum] = FParamDataType;
         FuncInformation->FParmInDataIndex[FParmNum] = &IntDataTable[FparmInDataIndex];
         FParmNum++;
@@ -974,6 +1125,8 @@ void FuncFParam(int& FParamDataType, int& FparmInDataIndex){
                         CurSymPos = CurSymPos+1;
 
                         ConstExp();
+                        RubbishConst = 0;
+                        Sem_gettop(&RubbishConst);//移除constexp在运行栈
                         if(SymbolList[CurSymPos] == RBRACK){//RBRACK
                             Sym_map(SymbolList[CurSymPos]);
                             CurSymPos = CurSymPos+1;
@@ -1019,10 +1172,21 @@ void FuncFParam(int& FParamDataType, int& FparmInDataIndex){
                 }
             }
             /*将形参变量插入符号表*/
-            IntDataTable[IntDataTableTop++] = 0;
+            //IntDataTable[IntDataTableTop++] = 0;
             //FparmInDataIndex = IntDataTableTop-1;
             //Sem_InsertDataStack(FParamNameIndex, FParamIdentType, FParamDataType, FParamLineNumIndex, DECLFLAG, NULL, NULL, &IntDataTable[IntDataTableTop-1]);
             SymTabInsert(FParamNameIndex, FParamIdentType, FParamDataType, FParamLineNumIndex, DECLFLAG, NULL, NULL, &IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = FParamNameIndex;
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = 0;//函数声明在Pcode中的下标
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            IntDataTable[IntDataTableTop++] = -1;// 初始化数组模板表位置 置-1
+            Sem_load(&IntDataTable[IntDataTableTop-1]);// 对应数组的模板表初始位置：
+            IntDataTable[IntDataTableTop++] = 0;//初值是0
+            Sem_load(&IntDataTable[IntDataTableTop-1]);
+            Sem_dataStackInsert();
+            //然后将运行栈中加载好的实参，填入数据栈中
+
         }
     }
     if(ErrorPrintFlag)
@@ -1032,7 +1196,7 @@ void FuncFParam(int& FParamDataType, int& FparmInDataIndex){
 /*语句块*/
 //Block → '{' { ConstDecl | VarDecl | Stmt } '}'
 //BlockItem →
-void Block(){
+void Block(int IsVoidFunc){
     if(SymbolList[CurSymPos] == LBRACE){//LBRACE
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
@@ -1053,14 +1217,18 @@ void Block(){
             	Stmt(); 
 			} 
         }
+        if(IsVoidFunc == 1){
+            Sem_dataStackFuncReLoc();
+            Sem_return();
+        }
         if(SymbolList[CurSymPos] == RBRACE){//RBRACE
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
-
         }
 
     }
     SymTabReLoc();
+    Sem_dataStackReLoc();
     if(ErrorPrintFlag)
         printf("<Block>\n");
 }
@@ -1085,19 +1253,20 @@ void Stmt(){
         /*还是在IntData中生成一个标号*/
         IntDataTable[IntDataTableTop++] = -1;
         ILable_inIntTabIndexA = IntDataTableTop-1;
+        ILabStack.push_back(ILable_inIntTabIndexA);
         if(SymbolList[CurSymPos] == LPARENT){//LPARENT
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
             Cond();
             /**/
             /*有条件跳转*/
-            Sem_jpc(&IntDataTable[ILable_inIntTabIndexA]);
+            Sem_jpc(&IntDataTable[ILabStack[ILabStack.size()-1]]);//A
 
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
-                /*定位{*/
-                /*if(SymbolList[CurSymPos] == LBRACE){
+                /*定位{
+                if(SymbolList[CurSymPos] == LBRACE){
                     SymTabLoc((int)StackSymbolTable.size());
                 }*/
                 Stmt();
@@ -1106,36 +1275,45 @@ void Stmt(){
                     /*还是在IntData中生成一个标号*/
                     IntDataTable[IntDataTableTop++] = -1;
                     ILable_inIntTabIndexB = IntDataTableTop-1;
-                    Sem_jmp(&IntDataTable[ILable_inIntTabIndexB]);
-                    Sem_gpi(&IntDataTable[ILable_inIntTabIndexA]);
+                    ILabStack.push_back(ILable_inIntTabIndexB);
+
+                    Sem_jmp(&IntDataTable[ILabStack[ILabStack.size()-1]]);//b
+
+                    Sem_gpi(&IntDataTable[ILabStack[ILabStack.size()-2]]);//-2
 
                     Sym_map(SymbolList[CurSymPos]);
                     CurSymPos = CurSymPos+1;
-                    if(SymbolList[CurSymPos] == LBRACE){
+                    /*if(SymbolList[CurSymPos] == LBRACE){
                         SymTabLoc((int)StackSymbolTable.size());
-                    }
+                        Sem_dataStackLoc();
+                    }*/
 
                     Stmt();
-                    Sem_gpi(&IntDataTable[ILable_inIntTabIndexB]);
+                    Sem_gpi(&IntDataTable[ILabStack[ILabStack.size()-1]]);//-1
+                    ILabStack.pop_back();
+                    ILabStack.pop_back();
                 }
                 else{
-                    Sem_gpi(&IntDataTable[ILable_inIntTabIndexA]);
+                    Sem_gpi(&IntDataTable[ILabStack[ILabStack.size()-1]]);
+                    ILabStack.pop_back();
                 }
             }
             else{
                 Error(EJ);
                 //缺少右括号后，正常进入else
-                if(SymbolList[CurSymPos] == LBRACE){
+                /*if(SymbolList[CurSymPos] == LBRACE){
                     SymTabLoc((int)StackSymbolTable.size());
-                }
+                    Sem_dataStackLoc();
+                }*/
                 Stmt();
 
                 if(SymbolList[CurSymPos] == ELSETK){//ELSETK
                     Sym_map(SymbolList[CurSymPos]);
                     CurSymPos = CurSymPos+1;
-                    if(SymbolList[CurSymPos] == LBRACE){
+                    /*if(SymbolList[CurSymPos] == LBRACE){
                         SymTabLoc((int)StackSymbolTable.size());
-                    }
+                        Sem_dataStackLoc();
+                    }*/
                     Stmt();
 
                 }
@@ -1149,8 +1327,10 @@ void Stmt(){
         /*设置标号，labA*/
         IntDataTable[IntDataTableTop++] = PCodeList.size()-1;
         WLable_inIntTabIndexA = IntDataTableTop-1;
+        WLabStack.push_back(WLable_inIntTabIndexA);
         IntDataTable[IntDataTableTop++] = PCodeList.size()-1;
         WLable_inIntTabIndexB = IntDataTableTop-1;
+        WLabStack.push_back(WLable_inIntTabIndexB);
 
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
@@ -1159,7 +1339,7 @@ void Stmt(){
             CurSymPos = CurSymPos+1;
             Cond();
             /*有条件跳转*/
-            Sem_jpc(&IntDataTable[WLable_inIntTabIndexB]);
+            Sem_jpc(&IntDataTable[WLabStack[WLabStack.size()-1]]);//labb
             if(SymbolList[CurSymPos] == RPARENT){//RPARENT
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
@@ -1167,13 +1347,16 @@ void Stmt(){
                     SymTabLoc((int)StackSymbolTable.size());
                 }*/
                 Stmt();
-                Sem_jmp(&IntDataTable[WLable_inIntTabIndexA]);
-                Sem_gpi(&IntDataTable[WLable_inIntTabIndexB]);
+                Sem_jmp(&IntDataTable[WLabStack[WLabStack.size()-2]]);//laba
+                Sem_gpi(&IntDataTable[WLabStack[WLabStack.size()-1]]);//labb
+                WLabStack.pop_back();
+                WLabStack.pop_back();
             }
             else{
                 Error(EJ);
                 if(SymbolList[CurSymPos] == LBRACE){
                     SymTabLoc((int)StackSymbolTable.size());
+                    Sem_dataStackLoc();
                 }
                 Stmt();
             }
@@ -1186,7 +1369,7 @@ void Stmt(){
         if(IsWhile.size() == 0){
             Error(EM);
         }
-        Sem_jmp(&IntDataTable[WLable_inIntTabIndexB]);
+        Sem_jmp(&IntDataTable[WLabStack[WLabStack.size()-1]]);
 
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
@@ -1205,7 +1388,7 @@ void Stmt(){
         if(IsWhile.size() == 0){
             Error(EM);
         }
-        Sem_jmp(&IntDataTable[WLable_inIntTabIndexA]);
+        Sem_jmp(&IntDataTable[WLabStack[WLabStack.size()-2]]);
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         if(SymbolList[CurSymPos] == SEMICN){//SEMICN
@@ -1222,11 +1405,12 @@ void Stmt(){
         CurSymPos = CurSymPos+1;
         if(SymbolList[CurSymPos] != SEMICN){
             Exp();
-		} 
-		
+		}
+        Sem_dataStackFuncReLoc();
         if(SymbolList[CurSymPos] == SEMICN){//SEMICN
             Sym_map(SymbolList[CurSymPos]);
             CurSymPos = CurSymPos+1;
+
         }
         else{
             /*不需要加判断*/
@@ -1347,7 +1531,8 @@ void Stmt(){
          	                   	CurSymPos = CurSymPos+1;
 
                                 if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Int){
-                                    Sem_sto(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
+                                    IntDataTable[IntDataTableTop++] = CALLFLAG;
+                                    Sem_sto(&IntDataTable[IntDataTableTop-1]);
                                 }
          	                   	else if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array1||
                                         StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array2){
@@ -1376,7 +1561,8 @@ void Stmt(){
             	else{
             	    Exp();
                     if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Int){
-                        Sem_sto(StackSymbolTable[Attr_StackSymIndex].IntDataAddr);
+                        IntDataTable[IntDataTableTop++] = CALLFLAG;
+                        Sem_sto(&IntDataTable[IntDataTableTop-1]);
                     }
                     else if(StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array1||
                             StackSymbolTable[Attr_StackSymIndex].DataTypeId == Array2){
@@ -1399,6 +1585,8 @@ void Stmt(){
             if(SymbolList[CurSymPos] == SEMICN){//SEMICN
                 Sym_map(SymbolList[CurSymPos]);
                 CurSymPos = CurSymPos+1;
+                IntDataTable[IntDataTableTop++] = 0;
+                Sem_gettop(&IntDataTable[IntDataTableTop-1]);//去除runstack的stmt exp（）；保留在栈顶上的值
             }
             else{
                 /*不需要加判断*/
@@ -1410,7 +1598,8 @@ void Stmt(){
     }
 	else if(SymbolList[CurSymPos] == LBRACE){
 	    SymTabLoc((int)StackSymbolTable.size());
-	    Block();
+	    Sem_dataStackLoc();
+	    Block(0);
 
     }
     else{
@@ -1483,11 +1672,16 @@ void LOrExp(){
         if(ErrorPrintFlag)
     	printf("<LOrExp>\n");
 	}
+    IntDataTable[IntDataTableTop++] = -1;
+    OrLable_inIntTabIndexA = IntDataTableTop-1;
+    OrLabStack.push_back(OrLable_inIntTabIndexA);
     while(SymbolList[CurSymPos] == OR){//OR
 
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
-
+        Sem_loadRepeat();
+        Sem_not();
+        Sem_jpc(&IntDataTable[OrLabStack[OrLabStack.size()-1]]);
         LAndExp();
 
         Sem_orr();
@@ -1497,6 +1691,8 @@ void LOrExp(){
 		}
 		
     }
+    Sem_gpi(&IntDataTable[OrLabStack[OrLabStack.size()-1]]);
+    OrLabStack.pop_back();
     if(ErrorPrintFlag)
         printf("<LOrExp>\n");
 }
@@ -1511,9 +1707,14 @@ void LAndExp(){
         if(ErrorPrintFlag)
         	printf("<LAndExp>\n");
     }
+    IntDataTable[IntDataTableTop++] = -1;
+    AndLable_inIntTabIndexA = IntDataTableTop-1;
+    AndLabStack.push_back(AndLable_inIntTabIndexA);
     while(SymbolList[CurSymPos] == AND){//AND
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
+        Sem_loadRepeat();
+        Sem_jpc(&IntDataTable[AndLabStack[AndLabStack.size()-1]]);
         EqExp();
 
         Sem_and();
@@ -1523,6 +1724,8 @@ void LAndExp(){
 		}
 		
     }
+    Sem_gpi(&IntDataTable[AndLabStack[AndLabStack.size()-1]]);
+    AndLabStack.pop_back();
     if(ErrorPrintFlag)
         printf("<LAndExp>\n");
 }
@@ -1538,8 +1741,9 @@ void EqExp(){
         if(ErrorPrintFlag)
         printf("<EqExp>\n");
 	}
-    int Eql_Not = SymbolList[CurSymPos];
+
     while(SymbolList[CurSymPos] == EQL||SymbolList[CurSymPos] == NEQ){//EQL //NEQ
+        int Eql_Not = SymbolList[CurSymPos];
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         RelExp();
@@ -1569,9 +1773,9 @@ void RelExp(){
         if(ErrorPrintFlag)
         printf("<RelExp>\n");
 	}
-    int RelOp = SymbolList[CurSymPos];
-    while(SymbolList[CurSymPos] == GRE||SymbolList[CurSymPos] == LSS||SymbolList[CurSymPos] == GEQ||SymbolList[CurSymPos] == LEQ){//GRE LSS GEQ LEQ
 
+    while(SymbolList[CurSymPos] == GRE||SymbolList[CurSymPos] == LSS||SymbolList[CurSymPos] == GEQ||SymbolList[CurSymPos] == LEQ){//GRE LSS GEQ LEQ
+        int RelOp = SymbolList[CurSymPos];
         Sym_map(SymbolList[CurSymPos]);
         CurSymPos = CurSymPos+1;
         AddExp();
@@ -1587,7 +1791,6 @@ void RelExp(){
         else if(RelOp == LEQ){
             Sem_leq();
         }
-
 
         if(SymbolList[CurSymPos] == GRE||SymbolList[CurSymPos] == LSS||SymbolList[CurSymPos] == GEQ||SymbolList[CurSymPos] == LEQ){
             if(ErrorPrintFlag)
@@ -1616,9 +1819,10 @@ void MainFuncDef(){
         		CurSymPos = CurSymPos+1;
         		/*定位分程序索引表*/
         		SymTabLoc((int)StackSymbolTable.size());
+        		Sem_dataStackFuncLoc();
         		/**/
         		IsIntReturn = 0;
-        		Block();
+        		Block(0);
         		if(IsIntReturn == 0){
         		    Error(EG);
         		}
@@ -1627,7 +1831,8 @@ void MainFuncDef(){
         	    Error(EJ);
                 /*缺少右小括号*/
                 SymTabLoc((int)StackSymbolTable.size());
-                Block();
+                Sem_dataStackLoc();
+                Block(0);
         	}
 		}
 	}

@@ -60,14 +60,26 @@ void Sem_loadi(int* Attr_NumValueAddr){
 
 void Sem_load(int* Attr_VarValueAddr){
     //printf("%d %d\n", *Attr_VarValueAddr, Attr_VarValueAddr);
-
     PCodeList.push_back({P_LOAD, IsFunc, SymbolListLine[CurSymPos], Attr_VarValueAddr});
 }
-
+void Sem_loadAry_elm(){
+    //printf("%d %d\n", *Attr_VarValueAddr, Attr_VarValueAddr);
+    PCodeList.push_back({P_LOADARY_ELM, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
 /*赋值*/
 void Sem_sto(int* Attr_ValueAddr){
     //printf("%x\n",Attr_ValueAddr);
     PCodeList.push_back({P_STO, IsFunc, SymbolListLine[CurSymPos], Attr_ValueAddr});
+}
+/*给形参赋实参值*/
+void Sem_stoInt_param(int* Attr_ValueAddr){
+    PCodeList.push_back({P_STOINT_PARAM, IsFunc, SymbolListLine[CurSymPos], Attr_ValueAddr});
+
+}
+/*给形参赋实参值*/
+void Sem_stoAry_param(int* Attr_ValueAddr){
+    PCodeList.push_back({P_STOARY_PARAM, IsFunc, SymbolListLine[CurSymPos], Attr_ValueAddr});
+
 }
 /*输入*/
 /*将buffer的值放到栈顶*/
@@ -89,7 +101,6 @@ void Sem_jpc(int* Attr_TargetAddr){
 /*获取跳转标签pcodelist[i]地址*/
 void Sem_gpi(int* Attr_TargetAddr){
     *Attr_TargetAddr = PCodeList.size()-1;
-    //printf("Attr_TargetAddr%d", *Attr_TargetAddr);
     PCodeList.push_back({P_GPI, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
 }
 /*无条件跳转*/
@@ -97,14 +108,9 @@ void Sem_jmp(int* Attr_TargetAddr){
     PCodeList.push_back({P_JMP, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
 }
 /*无条件跳转*/
-void Sem_jsr(int* Attr_TargetAddr){
-    PCodeList.push_back({P_JSR, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
+void Sem_jsr(){
+    PCodeList.push_back({P_JSR, IsFunc, SymbolListLine[CurSymPos], NULL});
 }
-/*break*/
-/*void Sem_break(){
-
-}*/
-/*continue*/
 
 void Sem_toplus(){
     PCodeList.push_back({P_TOPLUS, IsFunc, SymbolListLine[CurSymPos], NULL});
@@ -125,14 +131,46 @@ void Sem_stop(){
 void Sem_str(int* Attr_TargetAddr){
     PCodeList.push_back({P_STR, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
 }
+/*初始化模板表对应数组存储的长度*/
+void Sem_initCAry_sArea(){
+    PCodeList.push_back({P_INITCARY_SAREA, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+/*初始化模板表对应数组存储的长度*/
+void Sem_initVAry_sArea(int* Attr_TargetAddr){
+    PCodeList.push_back({P_INITVARY_SAREA, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
+}
+void Sem_initAry_tempbegin(){
+    PCodeList.push_back({P_INITARY_TEMPBEGIN, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_initAry_templvup(){
+    PCodeList.push_back({P_INITARY_TEMPLVUP, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+/*根据二维数组，新建一个临时模板表，提供给形参的一维数组*/
+void Sem_newAry_temp(){
+    PCodeList.push_back({P_NEWARY_TEMP, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+
+void Sem_LoadAry_temp(){
+    PCodeList.push_back({P_LOADARY_TEMP, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_LoadAry_pi(int* Attr_TargetAddr){
+    PCodeList.push_back({P_LOADARY_PI, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
+}
+void Sem_LoadAry_begin(){
+    PCodeList.push_back({P_LOADARY_BEGIN, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
 void Sem_getAry_pi(int* Attr_TargetAddr){
     PCodeList.push_back({P_GETARY_PI, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
 }
 void Sem_swp(){
     PCodeList.push_back({P_SWP, IsFunc, SymbolListLine[CurSymPos], NULL});
 }
+/*获得模板表在temparea的位置*/
+void Sem_getAry_tempBegin(int* Attr_TargetAddr){
+    PCodeList.push_back({P_GETARY_TEMPBEGIN,  IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
+}
 void Sem_getAry_val(){
-    PCodeList.push_back({P_GETARY_VAL, SymbolListLine[CurSymPos], IsFunc, NULL});
+    PCodeList.push_back({P_GETARY_VAL,  IsFunc, SymbolListLine[CurSymPos], NULL});
 }
 void Sem_getAry_begin(int* Attr_TargetAddr){
     PCodeList.push_back({P_GETARY_BEGIN, IsFunc, SymbolListLine[CurSymPos], Attr_TargetAddr});
@@ -141,3 +179,28 @@ void Sem_stoAry(){
     PCodeList.push_back({P_STOARY, IsFunc, SymbolListLine[CurSymPos], NULL});
 }
 
+void Sem_dataStackInsert(){
+    PCodeList.push_back({P_DATA_INSERT, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+
+void Sem_dataStackFind(){
+    PCodeList.push_back({P_DATA_FIND, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_loadDataIndex(){
+    PCodeList.push_back({P_LOAD_DATA_INDEX, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_dataStackLoc(){
+    PCodeList.push_back({P_DATA_LOC, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_dataStackReLoc(){
+    PCodeList.push_back({P_DATA_RELOC, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_dataStackFuncLoc(){
+    PCodeList.push_back({P_DATA_FUNC_LOC, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_dataStackFuncReLoc(){
+    PCodeList.push_back({P_DATA_FUNC_RELOC, IsFunc, SymbolListLine[CurSymPos], NULL});
+}
+void Sem_loadRepeat(){
+    PCodeList.push_back({P_LOAD_REPEAT, IsFunc, SymbolListLine[CurSymPos], NULL});
+}

@@ -22,7 +22,7 @@ void FuncType();        //函数类型
 void FuncFParams(int& FParmNum, FuncInformationTab* FuncInformation);     //函数形参表
 void FuncFParam(int& DataType, int& FparmInDataIndex);      //函数形参
 void MainFuncDef();     //主函数定义
-void Block();           //语句块定义
+void Block(int IsVoidFunc);           //语句块定义
 void Stmt();            //语句
 void FormatString(int& FormatCNum);    //字符串
 void LVal(int& IdentTypeIdTemp, int& Attr_StackSymIndex, int Attr_IsAssignLeft);            //左值表达式

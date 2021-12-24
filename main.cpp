@@ -42,36 +42,44 @@ char ErrorTypeList[15] = {'a','b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 
 int ErrorPrintFlag = 0;
 /*代码生成*/
-vector<DataTable> DataStack;
-int IntDataTable[200000];
+int RubbishConst;//存放函数数组形参a[][constexp] exp的值
+int IntDataTable[100000];
 int IntDataTableTop;
-int ArrayStorageArea[200000];
-int ArrayStorageAreaTop;
+int ArraySArea[100000];
+int ArraySAreaTop;
+int ArrayTempArea[100000];
+int ArrayTempTop;
 
-vector<int> Buffer;
-int BufferTop;
 int IsFunc = -1;
 int WLable_inIntTabIndexA;
 int WLable_inIntTabIndexB;
 int ILable_inIntTabIndexA;
 int ILable_inIntTabIndexB;
+int AndLable_inIntTabIndexA;
+int AndLable_inIntTabIndexB;
+int OrLable_inIntTabIndexA;
+int OrLable_inIntTabIndexB;
 int UnaryOpNum = 0;
-string PrintfTemp;
-    /*运行栈实现*/
-vector<int> RunStack;
-vector<int> RunStack_Func;
-queue<int> PrintStack;
-int StringFront;
-int Stringtail;
 int indata;
 //int MainReturn;
+// /*运行栈实现*/
+vector<DataTable> DataStack;//数据栈
+vector<int> DataStackIndexTable;//数据栈索引表
+int RunStack[5000];
+int RunStackTop = -1;
+vector<int> RunStack_Func;
+vector<int> WLabStack;
+vector<int> ILabStack;
+vector<int> AndLabStack;
+vector<int> OrLabStack;
+queue<int> PrintStack;
 vector<PCodeTable> PCodeList;//PCode指令表
 int main() {
-    setbuf(stdout, NULL);
+    //setbuf(stdout, NULL);
     InitSymbolList();
 	FILE* in = fopen("testfile.txt", "r");
     //FILE* out = freopen("error.txt", "w", stdout);
-    //FILE* out = freopen("pcoderesult.txt", "w", stdout);
+    FILE* out = freopen("pcoderesult.txt", "w", stdout);
     /*读入字符串*/
     while((CurC = fgetc(in)) != EOF){
         InitCode[CurCPos++] = CurC;
@@ -95,10 +103,10 @@ int main() {
         Sym_map(SymbolList[CurSymPos]);
     }
 
-    PCodeListPrint();
+    //PCodeListPrint();
     /*目标代码的解释执行*/
     Interpretation_execution();
 
-    //fclose(stdout);
+    fclose(stdout);
     return 0;
 }
